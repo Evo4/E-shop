@@ -24,7 +24,7 @@ class MainVC: UIViewController {
     }()
     
     private lazy var collectionView: UICollectionView = {
-        let collection = UICollectionView()
+        let collection = UICollectionView(frame: .zero, collectionViewLayout: ColumnFlowLayout(cellsPerRow: 2, cellHeightMultiplier: 1.2, minimumInteritemSpacing: 15, minimumLineSpacing: 15, sectionInset: UIEdgeInsets(top: 15, left: 15, bottom: 0, right: 15)))
         collection.translatesAutoresizingMaskIntoConstraints = false
         collection.backgroundColor = #colorLiteral(red: 0.9490196078, green: 0.9607843137, blue: 0.9843137255, alpha: 1)
         return collection
@@ -37,7 +37,7 @@ class MainVC: UIViewController {
         view.alpha = 0
         return view
     }()
-    
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -80,7 +80,7 @@ class MainVC: UIViewController {
         [collectionView, sideMenuBackView].forEach { (subview) in
             view.addSubview(subview)
         }
-        
+    
         NSLayoutConstraint.activate([
             collectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             collectionView.leftAnchor.constraint(equalTo: view.leftAnchor),
@@ -91,7 +91,7 @@ class MainVC: UIViewController {
             sideMenuBackView.leftAnchor.constraint(equalTo: view.leftAnchor),
             sideMenuBackView.rightAnchor.constraint(equalTo: view.rightAnchor),
             sideMenuBackView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            
+
         ])
     }
     
@@ -116,6 +116,7 @@ extension MainVC: UICollectionViewDelegate, UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as? ProductCell {
+
             cell.callback = { [weak self] in
                 
             }
