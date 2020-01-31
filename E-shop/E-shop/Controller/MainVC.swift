@@ -66,17 +66,19 @@ class MainVC: UIViewController {
         }
     }
     
+    var products: [Product] = []
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupAppearance()
         setupConstraints()
         addGestureToSideMenu()
-        Service.shared.loadProducts()
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         self.navigationController?.navigationBar.layer.zPosition = -1
+        loadProducts()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -129,6 +131,15 @@ class MainVC: UIViewController {
         ])
     }
     
+    func loadProducts() {
+        Service.shared.loadProducts { [weak self] (products) in
+            DispatchQueue.main.async {
+                self?.products = products
+                self?.collectionView.reloadData()
+            }
+        }
+    }
+    
     @objc func openMenuAction() {
         self.isMenuHidden = !self.isMenuHidden
     }
@@ -145,16 +156,16 @@ class MainVC: UIViewController {
 
 extension MainVC: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 5
+        return products.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as? ProductCell {
-//            let product = Product(id: 1, img: "img1.png", text: "description", title: "Title")
-//            cell.product = product
+            let product = products[indexPath.row]
+            cell.product = product
             cell.callback = { [weak self] in
                 let productVC = ProductVC()
-//                productVC.title = product.title
+                productVC.title = product.title
                 self?.navigationController?.pushViewController(productVC, animated: true)
             }
             return cell

@@ -54,15 +54,23 @@ class Service {
         }.resume()
     }
     
-    func loadProducts() {
+    func loadProducts(completion: @escaping ([Product])->()) {
         guard let url = URL(string: "http://smktesting.herokuapp.com/api/products/") else {return}
         var request = URLRequest(url: url)
         request.httpMethod = "GET"
-        URLSession.shared.dataTask(with: url) { (data, response, err) in
+        URLSession.shared.dataTask(with: request) { (data, response, err) in
+            if let err = err {
+                print("Failed to load products:", err)
+            }
             if let data = data {
-                print("ok")
+                do {
+                    let products = try JSONDecoder().decode([Product].self, from: data)
+                    completion(products)
+                } catch {
+                    print(error)
+                }
+                
             }
         }.resume()
-        
     }
 }
