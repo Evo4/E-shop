@@ -54,7 +54,7 @@ class Service {
         }.resume()
     }
     
-    func loginAccount(username: String, password: String) {
+    func loginAccount(username: String, password: String, completion: @escaping (Bool)->()) {
         guard let url = URL(string: "http://smktesting.herokuapp.com/api/login/") else {return}
         var register = URLRequest(url: url)
         register.httpMethod = "POST"
@@ -69,8 +69,15 @@ class Service {
             }
             if let data = data {
                 do {
-                    let json = try JSONSerialization.jsonObject(with: data, options: [])
-                    print(json)
+                    let json = try JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions()) as? [String: Any]
+                    json?.forEach({ (obj) in
+                        print(obj)
+                        if obj.key == "message" {
+                            completion(false)
+                        } else if obj.key == "token" {
+                            completion(true)
+                        }
+                    })
                 } catch {
                     print(error)
                 }

@@ -149,6 +149,14 @@ class SignInVC: UIViewController {
     }
     
     @objc func loginAction() {
-        Service.shared.loginAccount(username: "test_user", password: "123")
+        if let username = usernameTextField.text, let password = passwordTextField.text {
+            Service.shared.loginAccount(username: username, password: password) { (reply) in
+                if reply {
+                    
+                } else {
+                    
+                }
+            }
+        }
     }
 }
