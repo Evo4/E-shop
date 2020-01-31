@@ -149,6 +149,6 @@ class SignInVC: UIViewController {
     }
     
     @objc func loginAction() {
-        
+        Service.shared.loginAccount(username: "test_user", password: "123")
     }
 }

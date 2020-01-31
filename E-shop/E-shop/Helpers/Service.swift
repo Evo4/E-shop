@@ -54,6 +54,30 @@ class Service {
         }.resume()
     }
     
+    func loginAccount(username: String, password: String) {
+        guard let url = URL(string: "http://smktesting.herokuapp.com/api/login/") else {return}
+        var register = URLRequest(url: url)
+        register.httpMethod = "POST"
+        register.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        
+        let params = ["username" : password, "password" : password]
+        guard let httpBody = try? JSONSerialization.data(withJSONObject: params, options: []) else {return}
+        register.httpBody = httpBody
+        URLSession.shared.dataTask(with: register) { (data, response, err) in
+            if let response = response {
+                print(response)
+            }
+            if let data = data {
+                do {
+                    let json = try JSONSerialization.jsonObject(with: data, options: [])
+                    print(json)
+                } catch {
+                    print(error)
+                }
+            }
+        }.resume()
+    }
+    
     func loadProducts(completion: @escaping ([Product])->()) {
         guard let url = URL(string: "http://smktesting.herokuapp.com/api/products/") else {return}
         var request = URLRequest(url: url)

@@ -78,7 +78,7 @@ class ProductCell: UICollectionViewCell {
             self.addSubview(subview)
         }
         NSLayoutConstraint.activate([
-            productImageView.topAnchor.constraint(equalTo: self.topAnchor),
+            productImageView.topAnchor.constraint(equalTo: self.topAnchor, constant: 5),
             productImageView.leftAnchor.constraint(equalTo: self.leftAnchor),
             productImageView.rightAnchor.constraint(equalTo: self.rightAnchor),
             productImageView.heightAnchor.constraint(equalToConstant: self.frame.height * 0.6),

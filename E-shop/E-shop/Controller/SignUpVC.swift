@@ -182,7 +182,7 @@ class SignUpVC: UIViewController {
                     let password = passwordTextField.text else {return}
                 Service.shared.registerAccount(username: username, password: password)
             } else {
-
+                
             }
         }
     }
