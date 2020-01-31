@@ -112,7 +112,9 @@ class LoginVC: UIViewController {
     }
     
     @objc func loginAsGuestAction() {
-        
+        let mainVC = MainVC()
+        let navController = UINavigationController(rootViewController: mainVC)
+        presentNextVC(viewController: navController)
     }
     
     func presentNextVC(viewController: UIViewController) {
