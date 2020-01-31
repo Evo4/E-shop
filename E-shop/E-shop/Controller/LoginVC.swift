@@ -107,7 +107,8 @@ class LoginVC: UIViewController {
     }
 
     @objc func signUpAction() {
-        
+        let signUpVC = SignUpVC()
+        presentNextVC(viewController: signUpVC)
     }
     
     @objc func loginAsGuestAction() {
