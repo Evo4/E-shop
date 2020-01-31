@@ -150,10 +150,12 @@ extension MainVC: UICollectionViewDelegate, UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as? ProductCell {
-            let product = Product(id: 1, img: "img1.png", text: "description", title: "Title")
-            cell.product = product
+//            let product = Product(id: 1, img: "img1.png", text: "description", title: "Title")
+//            cell.product = product
             cell.callback = { [weak self] in
-                
+                let productVC = ProductVC()
+//                productVC.title = product.title
+                self?.navigationController?.pushViewController(productVC, animated: true)
             }
             return cell
         }
