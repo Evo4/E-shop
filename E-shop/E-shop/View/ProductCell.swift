@@ -44,6 +44,17 @@ class ProductCell: UICollectionViewCell {
     
     var callback: (()->())?
     
+    var product: Product? {
+        didSet {
+            guard let p = self.product,
+                let url = URL(string: "http://smktesting.herokuapp.com/static/" + p.img) else {return}
+            Service.shared.downloadImage(from: url) { (data) in
+                self.productImageView.image = UIImage(data: data)
+            }
+            titleLabel.text = p.title
+            descriptionLabel.text = p.text
+        }
+    }
     
     override init(frame: CGRect) {
         super.init(frame: frame)

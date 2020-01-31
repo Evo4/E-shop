@@ -37,7 +37,34 @@ class MainVC: UIViewController {
         view.alpha = 0
         return view
     }()
-
+    
+    private lazy var sideMenuView: SideMenuView = {
+        let view = SideMenuView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    var sideMenuLeftAnchor: NSLayoutConstraint!
+    var sideMenuRightAnchor: NSLayoutConstraint!
+    
+    var isMenuHidden: Bool = true {
+        didSet {
+            if self.isMenuHidden {
+                sideMenuBackView.alpha = 1
+                UIView.animate(withDuration: 0.3) { [weak self] in
+                    self?.sideMenuRightAnchor.isActive = false
+                    self?.sideMenuLeftAnchor.isActive = true
+                    self?.view.layoutIfNeeded()
+                }
+            } else {
+                UIView.animate(withDuration: 0.3) { [weak self] in
+                    self?.sideMenuLeftAnchor.isActive = false
+                    self?.sideMenuRightAnchor.isActive = true
+                    self?.sideMenuBackView.alpha = 0
+                    self?.view.layoutIfNeeded()
+                }
+            }
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -80,7 +107,10 @@ class MainVC: UIViewController {
         [collectionView, sideMenuBackView].forEach { (subview) in
             view.addSubview(subview)
         }
-    
+        sideMenuBackView.addSubview(sideMenuView)
+        
+        sideMenuLeftAnchor = sideMenuView.leftAnchor.constraint(equalTo: view.leftAnchor)
+        sideMenuRightAnchor = sideMenuView.rightAnchor.constraint(equalTo: view.leftAnchor)
         NSLayoutConstraint.activate([
             collectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             collectionView.leftAnchor.constraint(equalTo: view.leftAnchor),
@@ -91,12 +121,16 @@ class MainVC: UIViewController {
             sideMenuBackView.leftAnchor.constraint(equalTo: view.leftAnchor),
             sideMenuBackView.rightAnchor.constraint(equalTo: view.rightAnchor),
             sideMenuBackView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-
+            
+            sideMenuView.topAnchor.constraint(equalTo: sideMenuBackView.topAnchor),
+            sideMenuRightAnchor!,
+            sideMenuView.bottomAnchor.constraint(equalTo: sideMenuBackView.bottomAnchor),
+            sideMenuView.widthAnchor.constraint(equalTo: sideMenuBackView.widthAnchor, multiplier: 0.6),
         ])
     }
     
     @objc func openMenuAction() {
-        
+        self.isMenuHidden = !self.isMenuHidden
     }
     
     func addGestureToSideMenu() {
@@ -105,7 +139,7 @@ class MainVC: UIViewController {
     }
     
     @objc func closeSideMenu() {
-        
+        self.isMenuHidden = !self.isMenuHidden
     }
 }
 
@@ -116,7 +150,8 @@ extension MainVC: UICollectionViewDelegate, UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as? ProductCell {
-
+            let product = Product(id: 1, img: "img1.png", text: "description", title: "Title")
+            cell.product = product
             cell.callback = { [weak self] in
                 
             }
