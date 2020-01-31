@@ -11,6 +11,7 @@
 		1191277023E4BC52000F54E9 /* Raleway-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1191276E23E4BC51000F54E9 /* Raleway-Regular.ttf */; };
 		1191277323E4BCDC000F54E9 /* EnterButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1191277123E4BCDC000F54E9 /* EnterButton.swift */; };
 		1191277423E4BCDC000F54E9 /* BackButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1191277223E4BCDC000F54E9 /* BackButton.swift */; };
+		1191277823E4BDA7000F54E9 /* SignInVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1191277723E4BDA7000F54E9 /* SignInVC.swift */; };
 		119D266923E18B9B00EC38C6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 119D266823E18B9B00EC38C6 /* AppDelegate.swift */; };
 		119D266B23E18B9B00EC38C6 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 119D266A23E18B9B00EC38C6 /* SceneDelegate.swift */; };
 		119D266D23E18B9B00EC38C6 /* LoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 119D266C23E18B9B00EC38C6 /* LoginVC.swift */; };
@@ -42,6 +43,7 @@
 		1191276E23E4BC51000F54E9 /* Raleway-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Raleway-Regular.ttf"; sourceTree = "<group>"; };
 		1191277123E4BCDC000F54E9 /* EnterButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EnterButton.swift; sourceTree = "<group>"; };
 		1191277223E4BCDC000F54E9 /* BackButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackButton.swift; sourceTree = "<group>"; };
+		1191277723E4BDA7000F54E9 /* SignInVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignInVC.swift; sourceTree = "<group>"; };
 		119D266523E18B9B00EC38C6 /* E-shop.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "E-shop.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		119D266823E18B9B00EC38C6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		119D266A23E18B9B00EC38C6 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -118,6 +120,7 @@
 			isa = PBXGroup;
 			children = (
 				119D266C23E18B9B00EC38C6 /* LoginVC.swift */,
+				1191277723E4BDA7000F54E9 /* SignInVC.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -311,6 +314,7 @@
 			files = (
 				119D266D23E18B9B00EC38C6 /* LoginVC.swift in Sources */,
 				119D266923E18B9B00EC38C6 /* AppDelegate.swift in Sources */,
+				1191277823E4BDA7000F54E9 /* SignInVC.swift in Sources */,
 				1191277323E4BCDC000F54E9 /* EnterButton.swift in Sources */,
 				1191277423E4BCDC000F54E9 /* BackButton.swift in Sources */,
 				119D266B23E18B9B00EC38C6 /* SceneDelegate.swift in Sources */,
