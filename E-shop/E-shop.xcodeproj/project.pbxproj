@@ -7,9 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1191276F23E4BC52000F54E9 /* Raleway-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1191276D23E4BC51000F54E9 /* Raleway-Bold.ttf */; };
+		1191277023E4BC52000F54E9 /* Raleway-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1191276E23E4BC51000F54E9 /* Raleway-Regular.ttf */; };
+		1191277323E4BCDC000F54E9 /* EnterButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1191277123E4BCDC000F54E9 /* EnterButton.swift */; };
+		1191277423E4BCDC000F54E9 /* BackButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1191277223E4BCDC000F54E9 /* BackButton.swift */; };
 		119D266923E18B9B00EC38C6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 119D266823E18B9B00EC38C6 /* AppDelegate.swift */; };
 		119D266B23E18B9B00EC38C6 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 119D266A23E18B9B00EC38C6 /* SceneDelegate.swift */; };
-		119D266D23E18B9B00EC38C6 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 119D266C23E18B9B00EC38C6 /* ViewController.swift */; };
+		119D266D23E18B9B00EC38C6 /* LoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 119D266C23E18B9B00EC38C6 /* LoginVC.swift */; };
 		119D267223E18B9D00EC38C6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 119D267123E18B9D00EC38C6 /* Assets.xcassets */; };
 		119D267523E18B9D00EC38C6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 119D267323E18B9D00EC38C6 /* LaunchScreen.storyboard */; };
 		119D268023E18B9D00EC38C6 /* E_shopTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 119D267F23E18B9D00EC38C6 /* E_shopTests.swift */; };
@@ -34,10 +38,14 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1191276D23E4BC51000F54E9 /* Raleway-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Raleway-Bold.ttf"; sourceTree = "<group>"; };
+		1191276E23E4BC51000F54E9 /* Raleway-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Raleway-Regular.ttf"; sourceTree = "<group>"; };
+		1191277123E4BCDC000F54E9 /* EnterButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EnterButton.swift; sourceTree = "<group>"; };
+		1191277223E4BCDC000F54E9 /* BackButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackButton.swift; sourceTree = "<group>"; };
 		119D266523E18B9B00EC38C6 /* E-shop.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "E-shop.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		119D266823E18B9B00EC38C6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		119D266A23E18B9B00EC38C6 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		119D266C23E18B9B00EC38C6 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		119D266C23E18B9B00EC38C6 /* LoginVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginVC.swift; sourceTree = "<group>"; };
 		119D267123E18B9D00EC38C6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		119D267423E18B9D00EC38C6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		119D267623E18B9D00EC38C6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -74,6 +82,46 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1191276423E4BBD2000F54E9 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
+		1191276523E4BBDB000F54E9 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				1191276D23E4BC51000F54E9 /* Raleway-Bold.ttf */,
+				1191276E23E4BC51000F54E9 /* Raleway-Regular.ttf */,
+			);
+			path = Fonts;
+			sourceTree = "<group>";
+		};
+		1191276623E4BBE0000F54E9 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		1191276723E4BBE7000F54E9 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				1191277223E4BCDC000F54E9 /* BackButton.swift */,
+				1191277123E4BCDC000F54E9 /* EnterButton.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		1191276823E4BBEB000F54E9 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				119D266C23E18B9B00EC38C6 /* LoginVC.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
 		119D265C23E18B9B00EC38C6 = {
 			isa = PBXGroup;
 			children = (
@@ -97,9 +145,13 @@
 		119D266723E18B9B00EC38C6 /* E-shop */ = {
 			isa = PBXGroup;
 			children = (
+				1191276823E4BBEB000F54E9 /* Controller */,
+				1191276723E4BBE7000F54E9 /* View */,
+				1191276623E4BBE0000F54E9 /* Model */,
+				1191276523E4BBDB000F54E9 /* Fonts */,
+				1191276423E4BBD2000F54E9 /* Helpers */,
 				119D266823E18B9B00EC38C6 /* AppDelegate.swift */,
 				119D266A23E18B9B00EC38C6 /* SceneDelegate.swift */,
-				119D266C23E18B9B00EC38C6 /* ViewController.swift */,
 				119D267123E18B9D00EC38C6 /* Assets.xcassets */,
 				119D267323E18B9D00EC38C6 /* LaunchScreen.storyboard */,
 				119D267623E18B9D00EC38C6 /* Info.plist */,
@@ -230,7 +282,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				119D267523E18B9D00EC38C6 /* LaunchScreen.storyboard in Resources */,
+				1191276F23E4BC52000F54E9 /* Raleway-Bold.ttf in Resources */,
 				119D267223E18B9D00EC38C6 /* Assets.xcassets in Resources */,
+				1191277023E4BC52000F54E9 /* Raleway-Regular.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -255,8 +309,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				119D266D23E18B9B00EC38C6 /* ViewController.swift in Sources */,
+				119D266D23E18B9B00EC38C6 /* LoginVC.swift in Sources */,
 				119D266923E18B9B00EC38C6 /* AppDelegate.swift in Sources */,
+				1191277323E4BCDC000F54E9 /* EnterButton.swift in Sources */,
+				1191277423E4BCDC000F54E9 /* BackButton.swift in Sources */,
 				119D266B23E18B9B00EC38C6 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
