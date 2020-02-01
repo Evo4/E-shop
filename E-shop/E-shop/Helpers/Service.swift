@@ -166,6 +166,16 @@ class Service {
         }.resume()
     }
     
+    //MARK: - UserDefaults methods
     
+    let defs = UserDefaults.standard
+    
+    func serializeCurrentUser(user: User) {
+        defs.set(try? PropertyListEncoder().encode(user), forKey: "user")
+    }
+    
+    func serializeUserToken(token: String) {
+        defs.set(try? PropertyListEncoder().encode(token), forKey: "token")
+    }
     
 }
