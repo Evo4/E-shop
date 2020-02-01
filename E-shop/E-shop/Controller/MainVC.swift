@@ -165,7 +165,12 @@ extension MainVC: UICollectionViewDelegate, UICollectionViewDataSource {
             cell.product = product
             cell.callback = { [weak self] in
                 let productVC = ProductVC()
-                productVC.title = product.title
+                let navTitleLabel = UILabel()
+                let navTitle = NSMutableAttributedString(string: product.title, attributes:[
+                    NSAttributedString.Key.foregroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1),
+                    NSAttributedString.Key.font: UIFont(name: "Raleway-Bold", size: 17)!])
+                navTitleLabel.attributedText = navTitle
+                productVC.navigationItem.titleView = navTitleLabel
                 self?.navigationController?.pushViewController(productVC, animated: true)
             }
             return cell

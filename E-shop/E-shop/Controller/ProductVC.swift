@@ -10,6 +10,14 @@ import UIKit
 
 class ProductVC: UIViewController {
 
+    private lazy var productImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.contentMode = .scaleAspectFit
+        return imageView
+    }()
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupAppearance()
