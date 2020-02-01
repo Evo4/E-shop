@@ -150,9 +150,14 @@ class SignInVC: UIViewController {
     
     @objc func loginAction() {
         if let username = usernameTextField.text, let password = passwordTextField.text {
-            Service.shared.loginAccount(username: username, password: password) { (reply) in
+            Service.shared.loginAccount(username: username, password: password) { [weak self] (reply) in
                 if reply {
-                    
+                    DispatchQueue.main.async {
+                        let mainVC = MainVC()
+                        let navController = UINavigationController(rootViewController: mainVC)
+                        navController.modalPresentationStyle = .fullScreen
+                        self?.present(navController, animated: true, completion: nil)
+                    }
                 } else {
                     
                 }

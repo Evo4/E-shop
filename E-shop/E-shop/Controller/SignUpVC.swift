@@ -180,7 +180,13 @@ class SignUpVC: UIViewController {
             if passwordTextField.text == repeatPasswordTextField.text {
                 guard let username = usernameTextField.text,
                     let password = passwordTextField.text else {return}
-                Service.shared.registerAccount(username: username, password: password)
+                Service.shared.registerAccount(username: username, password: password) { (reply) in
+                    if reply {
+                        
+                    } else {
+                        
+                    }
+                }
             } else {
                 
             }
