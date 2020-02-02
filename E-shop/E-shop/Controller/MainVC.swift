@@ -49,10 +49,10 @@ class MainVC: UIViewController {
     var isMenuHidden: Bool = true {
         didSet {
             if self.isMenuHidden {
-                sideMenuBackView.alpha = 1
                 UIView.animate(withDuration: 0.3) { [weak self] in
                     self?.sideMenuRightAnchor.isActive = false
                     self?.sideMenuLeftAnchor.isActive = true
+                    self?.sideMenuBackView.alpha = 1
                     self?.view.layoutIfNeeded()
                 }
             } else {
@@ -73,7 +73,7 @@ class MainVC: UIViewController {
         super.viewDidLoad()
         setupAppearance()
         setupConstraints()
-        addGestureToSideMenu()
+        setupGestures()
         
         DispatchQueue.main.async {
             self.user = Service.shared.deserializeUser()
@@ -85,8 +85,6 @@ class MainVC: UIViewController {
             viewController.modalPresentationStyle = .fullScreen
             self.present(viewController, animated: true, completion: nil)
         }
-        
-        
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -123,7 +121,6 @@ class MainVC: UIViewController {
         [collectionView, sideMenuBackView, sideMenuView].forEach { (subview) in
             view.addSubview(subview)
         }
-//        sideMenuBackView.addSubview(sideMenuView)
         
         sideMenuLeftAnchor = sideMenuView.leftAnchor.constraint(equalTo: view.leftAnchor)
         sideMenuRightAnchor = sideMenuView.rightAnchor.constraint(equalTo: view.leftAnchor)
@@ -158,13 +155,39 @@ class MainVC: UIViewController {
         self.isMenuHidden = !self.isMenuHidden
     }
     
-    func addGestureToSideMenu() {
+    func setupGestures() {
         let gesture = UITapGestureRecognizer(target: self, action: #selector(closeSideMenu))
         sideMenuBackView.addGestureRecognizer(gesture)
+        
+        let leftGesture = UIPanGestureRecognizer(target: self, action: #selector(sideMenuGesture(sender:)))
+        sideMenuView.addGestureRecognizer(leftGesture)
     }
     
     @objc func closeSideMenu() {
         self.isMenuHidden = !self.isMenuHidden
+    }
+    
+    @objc func sideMenuGesture(sender: UIPanGestureRecognizer) {
+        let pos = sender.translation(in: sideMenuView)
+        let velocity = sender.velocity(in: sideMenuView)
+        let constant = pos.x
+        if constant <= 0 {
+            sideMenuLeftAnchor.constant = constant
+        }
+        if sender.state == UIPanGestureRecognizer.State.ended {
+            if velocity.x <= -550 || constant <= 85 {
+                sideMenuLeftAnchor.constant = 0
+                isMenuHidden = !isMenuHidden
+                return
+            }
+            if constant >= -85 {
+                UIView.animate(withDuration: 0.3) { [weak self] in
+                    self?.sideMenuLeftAnchor.constant = 0
+                    self?.view.layoutIfNeeded()
+                }
+                return
+            }
+        }
     }
 }
 
