@@ -12,6 +12,16 @@ class NewReviewVC: UIViewController {
 
     let rateButons:[UIButton] = [UIButton(), UIButton(), UIButton(), UIButton(), UIButton()]
     
+    private lazy var closeButton: UIButton = {
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setTitle("Close", for: .normal)
+        button.titleLabel?.font = UIFont(name: "Raleway-Bold", size: 17)
+        button.setTitleColor(#colorLiteral(red: 0, green: 0, blue: 0, alpha: 1), for: .normal)
+        button.addTarget(self, action: #selector(closeAction), for: .touchUpInside)
+        return button
+    }()
+    
     private lazy var rateStackView: UIStackView = {
         let stackView = UIStackView(arrangedSubviews: self.rateButons)
         stackView.translatesAutoresizingMaskIntoConstraints = false
@@ -40,17 +50,24 @@ class NewReviewVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        
+        setupAppearance()
+        setupConstraints()
+    }
+    
+    func setupAppearance() {
+        view.backgroundColor = #colorLiteral(red: 0.949000001, green: 0.9610000253, blue: 0.9840000272, alpha: 1)
+        setupRateButtons()
     }
     
     func setupConstraints() {
-        [rateStackView, reviewLabel, reviewTextView].forEach { (subview) in
+        [closeButton, rateStackView, reviewLabel, reviewTextView].forEach { (subview) in
             view.addSubview(subview)
         }
         NSLayoutConstraint.activate([
+            closeButton.topAnchor.constraint(equalTo: view.topAnchor, constant: 5),
+            closeButton.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 15),
             
-            rateStackView.topAnchor.constraint(equalTo: view.topAnchor, constant: 30),
+            rateStackView.topAnchor.constraint(equalTo: closeButton.bottomAnchor, constant: 20),
             rateStackView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 20),
             rateStackView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 20),
             rateStackView.heightAnchor.constraint(equalToConstant: 40),
@@ -66,11 +83,15 @@ class NewReviewVC: UIViewController {
     }
     
     func setupRateButtons() {
-           rateButons.forEach { (button) in
-               button.setImage(#imageLiteral(resourceName: "star"), for: .normal)
-               NSLayoutConstraint.activate([
-                   button.widthAnchor.constraint(equalToConstant: 40),
-               ])
-           }
-       }
+        rateButons.forEach { (button) in
+            button.setImage(#imageLiteral(resourceName: "star"), for: .normal)
+            NSLayoutConstraint.activate([
+                button.widthAnchor.constraint(equalToConstant: 40),
+            ])
+        }
+    }
+    
+    @objc func closeAction() {
+        self.dismiss(animated: true, completion: nil)
+    }
 }

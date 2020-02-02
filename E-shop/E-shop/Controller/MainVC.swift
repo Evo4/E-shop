@@ -96,8 +96,8 @@ class MainVC: UIViewController {
         self.navigationItem.titleView = navTitleLabel
         
         self.navigationController?.navigationBar.barTintColor = #colorLiteral(red: 0, green: 0.768627451, blue: 0.2470588235, alpha: 1)
-        let left = UIBarButtonItem(customView: menuButton)
-        self.navigationItem.leftBarButtonItem = left
+        let leftBarButton = UIBarButtonItem(customView: menuButton)
+        self.navigationItem.leftBarButtonItem = leftBarButton
         
         
         collectionView.delegate = self
