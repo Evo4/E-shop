@@ -13,7 +13,7 @@ class ProductVC: UIViewController {
     private lazy var addReviewButton: UIButton = {
         let button = UIButton()
         button.setTitle("Add review", for: .normal)
-        button.titleLabel?.font = UIFont(name: "Raleway-Bold", size: 16)
+        button.titleLabel?.font = UIFont(name: "Raleway-Bold", size: 17)
         button.addTarget(self, action: #selector(openNewReviewVC), for: .touchUpInside)
         button.tintColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
         return button
@@ -97,6 +97,7 @@ class ProductVC: UIViewController {
     
     @objc func openNewReviewVC() {
         let newReviewVC = NewReviewVC()
-        self.present(newReviewVC, animated: true, completion: nil)
+        let navController = UINavigationController(rootViewController: newReviewVC)
+        self.present(navController, animated: true, completion: nil)
     }
 }

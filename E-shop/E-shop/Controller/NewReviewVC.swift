@@ -14,11 +14,19 @@ class NewReviewVC: UIViewController {
     
     private lazy var closeButton: UIButton = {
         let button = UIButton()
-        button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitle("Close", for: .normal)
-        button.titleLabel?.font = UIFont(name: "Raleway-Bold", size: 17)
-        button.setTitleColor(#colorLiteral(red: 0, green: 0, blue: 0, alpha: 1), for: .normal)
+        button.titleLabel?.font = UIFont(name: "Raleway-Regular", size: 17)
+        button.setTitleColor(#colorLiteral(red: 1, green: 1, blue: 1, alpha: 1), for: .normal)
         button.addTarget(self, action: #selector(closeAction), for: .touchUpInside)
+        return button
+    }()
+    
+    private lazy var sendReviewButton: UIButton = {
+        let button = UIButton()
+        button.setTitle("Send", for: .normal)
+        button.titleLabel?.font = UIFont(name: "Raleway-Bold", size: 17)
+        button.setTitleColor(#colorLiteral(red: 1, green: 1, blue: 1, alpha: 1), for: .normal)
+        button.addTarget(self, action: #selector(sendReviewAction), for: .touchUpInside)
         return button
     }()
     
@@ -56,18 +64,30 @@ class NewReviewVC: UIViewController {
     
     func setupAppearance() {
         view.backgroundColor = #colorLiteral(red: 0.949000001, green: 0.9610000253, blue: 0.9840000272, alpha: 1)
+        self.navigationController?.navigationBar.barTintColor = #colorLiteral(red: 0, green: 0.768627451, blue: 0.2470588235, alpha: 1)
+        
+        let navTitleLabel = UILabel()
+        let navTitle = NSMutableAttributedString(string: "Review", attributes:[
+            NSAttributedString.Key.foregroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1),
+            NSAttributedString.Key.font: UIFont(name: "Raleway-Bold", size: 17)!])
+        navTitleLabel.attributedText = navTitle
+        
+        self.navigationItem.titleView = navTitleLabel
+        
+        let leftBarButton = UIBarButtonItem(customView: closeButton)
+        self.navigationItem.leftBarButtonItem = leftBarButton
+        
+        let rightBarButton = UIBarButtonItem(customView: sendReviewButton)
+        self.navigationItem.rightBarButtonItem = rightBarButton
         setupRateButtons()
     }
     
     func setupConstraints() {
-        [closeButton, rateStackView, reviewLabel, reviewTextView].forEach { (subview) in
+        [rateStackView, reviewLabel, reviewTextView].forEach { (subview) in
             view.addSubview(subview)
         }
         NSLayoutConstraint.activate([
-            closeButton.topAnchor.constraint(equalTo: view.topAnchor, constant: 5),
-            closeButton.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 15),
-            
-            rateStackView.topAnchor.constraint(equalTo: closeButton.bottomAnchor, constant: 20),
+            rateStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
             rateStackView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 20),
             rateStackView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 20),
             rateStackView.heightAnchor.constraint(equalToConstant: 40),
@@ -93,5 +113,9 @@ class NewReviewVC: UIViewController {
     
     @objc func closeAction() {
         self.dismiss(animated: true, completion: nil)
+    }
+    
+    @objc func sendReviewAction() {
+        
     }
 }
