@@ -25,6 +25,7 @@
 		1191278F23E4D12C000F54E9 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1191278E23E4D12C000F54E9 /* User.swift */; };
 		1191279123E63DFC000F54E9 /* ProductCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1191279023E63DFC000F54E9 /* ProductCardView.swift */; };
 		1191279323E72DED000F54E9 /* NewReviewVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1191279223E72DED000F54E9 /* NewReviewVC.swift */; };
+		1191279523E739A0000F54E9 /* SnapPagingLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1191279423E739A0000F54E9 /* SnapPagingLayout.swift */; };
 		119D266923E18B9B00EC38C6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 119D266823E18B9B00EC38C6 /* AppDelegate.swift */; };
 		119D266B23E18B9B00EC38C6 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 119D266A23E18B9B00EC38C6 /* SceneDelegate.swift */; };
 		119D266D23E18B9B00EC38C6 /* LoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 119D266C23E18B9B00EC38C6 /* LoginVC.swift */; };
@@ -70,6 +71,7 @@
 		1191278E23E4D12C000F54E9 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		1191279023E63DFC000F54E9 /* ProductCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductCardView.swift; sourceTree = "<group>"; };
 		1191279223E72DED000F54E9 /* NewReviewVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewReviewVC.swift; sourceTree = "<group>"; };
+		1191279423E739A0000F54E9 /* SnapPagingLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnapPagingLayout.swift; sourceTree = "<group>"; };
 		119D266523E18B9B00EC38C6 /* E-shop.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "E-shop.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		119D266823E18B9B00EC38C6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		119D266A23E18B9B00EC38C6 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -115,6 +117,7 @@
 			children = (
 				1191278123E4BF40000F54E9 /* ColumnFlowLayout.swift */,
 				1191277D23E4BE4C000F54E9 /* Service.swift */,
+				1191279423E739A0000F54E9 /* SnapPagingLayout.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -366,6 +369,7 @@
 				1191278D23E4C0AA000F54E9 /* ProductVC.swift in Sources */,
 				1191277323E4BCDC000F54E9 /* EnterButton.swift in Sources */,
 				1191279123E63DFC000F54E9 /* ProductCardView.swift in Sources */,
+				1191279523E739A0000F54E9 /* SnapPagingLayout.swift in Sources */,
 				1191277E23E4BE4C000F54E9 /* Service.swift in Sources */,
 				1191278F23E4D12C000F54E9 /* User.swift in Sources */,
 				1191277C23E4BDED000F54E9 /* MainVC.swift in Sources */,

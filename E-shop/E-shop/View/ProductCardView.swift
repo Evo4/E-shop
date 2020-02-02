@@ -28,6 +28,18 @@ class ProductCardView: UIView {
         return label
     }()
     
+    lazy var reviewsCollectionView: UICollectionView = {
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: SnapPagingLayout(
+            centerPosition: true,
+            peekWidth: 40,
+            spacing: 20,
+            inset: 16
+        ))
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
+        collectionView.backgroundColor = .clear
+        collectionView.showsHorizontalScrollIndicator = false
+        return collectionView
+    }()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -46,10 +58,14 @@ class ProductCardView: UIView {
         self.layer.shadowOffset = CGSize(width: 0, height: 0)
         self.layer.shadowRadius = 15
         self.layer.shadowOpacity = 0.25
+        
+        reviewsCollectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "cell")
+        reviewsCollectionView.delegate = self
+        reviewsCollectionView.dataSource = self
     }
     
     func setupConstraints() {
-        [titleLabel, descriptionLabel].forEach { (subview) in
+        [titleLabel, descriptionLabel, reviewsCollectionView].forEach { (subview) in
             self.addSubview(subview)
         }
         NSLayoutConstraint.activate([
@@ -58,8 +74,39 @@ class ProductCardView: UIView {
             
             descriptionLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 7),
             descriptionLabel.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 20),
+            
+            reviewsCollectionView.topAnchor.constraint(equalTo: descriptionLabel.bottomAnchor, constant: 30),
+            reviewsCollectionView.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 20),
+            reviewsCollectionView.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -20),
+            reviewsCollectionView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -20)
         ])
     }
     
    
+}
+
+extension ProductCardView: UICollectionViewDelegate, UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 10
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath)
+        cell.backgroundColor = #colorLiteral(red: 0.1764705926, green: 0.01176470611, blue: 0.5607843399, alpha: 1)
+        return cell
+    }
+    
+
+    
+    
+    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+        guard let layout = reviewsCollectionView.collectionViewLayout as? SnapPagingLayout else { return }
+        layout.willBeginDragging()
+    }
+
+    func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+        guard let layout = reviewsCollectionView.collectionViewLayout as? SnapPagingLayout else { return }
+        layout.willEndDragging(withVelocity: velocity, targetContentOffset: targetContentOffset)
+    }
+
 }
