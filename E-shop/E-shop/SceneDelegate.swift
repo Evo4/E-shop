@@ -11,7 +11,7 @@ import UIKit
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
-
+    var user: User?
 
     @available(iOS 13.0, *)
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
@@ -19,8 +19,16 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         if let windowScene = scene as? UIWindowScene {
             window = UIWindow(windowScene: windowScene)
             window?.makeKeyAndVisible()
-            let vc = LoginVC()
-            window?.rootViewController = vc
+
+            user = Service.shared.deserializeUser()
+            if user != nil {
+                let vc = MainVC()
+                let navController = UINavigationController(rootViewController: vc)
+                window?.rootViewController = navController
+            } else {
+                let vc = LoginVC()
+                window?.rootViewController = vc
+            }
         }
     }
 

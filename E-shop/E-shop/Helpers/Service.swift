@@ -91,7 +91,9 @@ class Service {
                             completion(false)
                         } else if obj.key == "token" {
                             self.findUserID(username: username) { (userID) in
-                                let user = User(id: userID, username: username, password: password)
+                                let token = obj.value as! String
+                                let user = User(id: userID, username: username, password: password, token: token)
+                                self.serializeCurrentUser(user: user)
                                 print("user: ", user)
                             }
                             completion(true)
@@ -129,7 +131,6 @@ class Service {
                                 }
                                 //serch user id
                                 arr.forEach { (pair) in
-                                    print(pair)
                                     if pair["username"] as! String == username {
                                         let id = pair["id"] as! Int
                                         completion(id)
@@ -178,4 +179,11 @@ class Service {
         defs.set(try? PropertyListEncoder().encode(token), forKey: "token")
     }
     
+    func deserializeUser() -> User? {
+        guard let data = defs.object(forKey: "user") as? Data,
+            let user = try? PropertyListDecoder().decode(User.self, from: data) else {
+                return nil
+        }
+        return user
+    }
 }

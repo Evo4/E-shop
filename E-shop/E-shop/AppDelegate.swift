@@ -12,14 +12,23 @@ import UIKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-
+    var user: User?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
         window = UIWindow()
         window?.makeKeyAndVisible()
-        let vc = LoginVC()
-        window?.rootViewController = vc
+        
+        user = Service.shared.deserializeUser()
+        print("app delegate user check:", user)
+        if user != nil {
+            let vc = MainVC()
+            let navController = UINavigationController(rootViewController: vc)
+            window?.rootViewController = navController
+        } else {
+            let vc = LoginVC()
+            window?.rootViewController = vc
+        }
         
         return true
     }

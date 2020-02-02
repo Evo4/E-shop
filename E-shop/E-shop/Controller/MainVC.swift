@@ -67,12 +67,21 @@ class MainVC: UIViewController {
     }
     
     var products: [Product] = []
+    var user: User?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setupAppearance()
         setupConstraints()
         addGestureToSideMenu()
+        
+//        print("mainVC")
+        user = Service.shared.deserializeUser()
+//        DispatchQueue.main.async {
+            print("saved user:")
+            print(self.user)
+//        }
+        
     }
     
     override func viewDidAppear(_ animated: Bool) {
