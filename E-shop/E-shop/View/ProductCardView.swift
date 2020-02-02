@@ -59,7 +59,7 @@ class ProductCardView: UIView {
         self.layer.shadowRadius = 15
         self.layer.shadowOpacity = 0.25
         
-        reviewsCollectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "cell")
+        reviewsCollectionView.register(ReviewCell.self, forCellWithReuseIdentifier: "cell")
         reviewsCollectionView.delegate = self
         reviewsCollectionView.dataSource = self
     }
@@ -91,14 +91,12 @@ extension ProductCardView: UICollectionViewDelegate, UICollectionViewDataSource 
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath)
-        cell.backgroundColor = #colorLiteral(red: 0.1764705926, green: 0.01176470611, blue: 0.5607843399, alpha: 1)
-        return cell
+        if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as? ReviewCell {
+            return cell
+        }
+        return UICollectionViewCell()
     }
-    
 
-    
-    
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
         guard let layout = reviewsCollectionView.collectionViewLayout as? SnapPagingLayout else { return }
         layout.willBeginDragging()
