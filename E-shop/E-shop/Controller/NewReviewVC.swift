@@ -98,7 +98,7 @@ class NewReviewVC: UIViewController {
             reviewTextView.topAnchor.constraint(equalTo: reviewLabel.bottomAnchor, constant: 4),
             reviewTextView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 20),
             reviewTextView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -20),
-            reviewTextView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -10),
+            reviewTextView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -10),
         ])
     }
     

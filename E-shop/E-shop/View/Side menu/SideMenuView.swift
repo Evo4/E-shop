@@ -35,6 +35,7 @@ class SideMenuView: UIView {
         return tableView
     }()
     
+    var callback: ((UIViewController)->())?
     let menuItems:[MenuItem] = [
         MenuItem(name: "Settings", image: #imageLiteral(resourceName: "settings")),
         MenuItem(name: "Logout", image: #imageLiteral(resourceName: "exit"))
@@ -86,7 +87,13 @@ extension SideMenuView: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as? SideMenuCell {
-            cell.menuItem = menuItems[indexPath.row]
+            let item = menuItems[indexPath.row]
+            cell.menuItem = item
+            cell.callback = {
+                self.cellAction(by: indexPath.row)
+//                print("works", indexPath.row)
+            }
+            
             return cell
         }
         return UITableViewCell()
@@ -96,4 +103,21 @@ extension SideMenuView: UITableViewDelegate, UITableViewDataSource {
         return 45
     }
     
+    func cellAction(by row: Int) {
+        switch row {
+        case 0:
+            break
+        case 1:
+            let dictionary = Service.shared.defs.dictionaryRepresentation()
+            dictionary.keys.forEach { key in
+//                defaults.removeObject(forKey: key)
+                print(key)
+            }
+            Service.shared.defs.removeObject(forKey: "user")
+            callback?(LoginVC())
+            break
+        default:
+            break
+        }
+    }
 }

@@ -75,12 +75,17 @@ class MainVC: UIViewController {
         setupConstraints()
         addGestureToSideMenu()
         
-//        print("mainVC")
-        user = Service.shared.deserializeUser()
-//        DispatchQueue.main.async {
+        DispatchQueue.main.async {
+            self.user = Service.shared.deserializeUser()
             print("saved user:")
             print(self.user)
-//        }
+        }
+        
+        sideMenuView.callback = { viewController in
+            viewController.modalPresentationStyle = .fullScreen
+            self.present(viewController, animated: true, completion: nil)
+        }
+        
         
     }
     
@@ -115,10 +120,10 @@ class MainVC: UIViewController {
     }
 
     func setupConstraints() {
-        [collectionView, sideMenuBackView].forEach { (subview) in
+        [collectionView, sideMenuBackView, sideMenuView].forEach { (subview) in
             view.addSubview(subview)
         }
-        sideMenuBackView.addSubview(sideMenuView)
+//        sideMenuBackView.addSubview(sideMenuView)
         
         sideMenuLeftAnchor = sideMenuView.leftAnchor.constraint(equalTo: view.leftAnchor)
         sideMenuRightAnchor = sideMenuView.rightAnchor.constraint(equalTo: view.leftAnchor)
@@ -188,8 +193,5 @@ extension MainVC: UICollectionViewDelegate, UICollectionViewDataSource {
             return cell
         }
         return UICollectionViewCell()
-    }
-    
-    
-    
+    }    
 }

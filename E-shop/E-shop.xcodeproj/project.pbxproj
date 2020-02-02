@@ -172,8 +172,8 @@
 		1191278723E4C01A000F54E9 /* Side menu */ = {
 			isa = PBXGroup;
 			children = (
-				1191278923E4C025000F54E9 /* SideMenuCell.swift */,
 				1191278823E4C025000F54E9 /* SideMenuView.swift */,
+				1191278923E4C025000F54E9 /* SideMenuCell.swift */,
 			);
 			path = "Side menu";
 			sourceTree = "<group>";

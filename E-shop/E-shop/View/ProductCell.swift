@@ -43,7 +43,6 @@ class ProductCell: UICollectionViewCell {
     }()
     
     var callback: (()->())?
-    
     var product: Product? {
         didSet {
             guard let p = self.product,

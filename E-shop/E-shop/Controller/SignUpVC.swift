@@ -180,9 +180,14 @@ class SignUpVC: UIViewController {
             if passwordTextField.text == repeatPasswordTextField.text {
                 guard let username = usernameTextField.text,
                     let password = passwordTextField.text else {return}
-                Service.shared.registerAccount(username: username, password: password) { (reply) in
+                Service.shared.registerAccount(username: username, password: password) { [weak self] (reply) in
                     if reply {
-                        
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                            let mainVC = MainVC()
+                            let navController = UINavigationController(rootViewController: mainVC)
+                            navController.modalPresentationStyle = .fullScreen
+                            self?.present(navController, animated: true, completion: nil)
+                        }
                     } else {
                         
                     }

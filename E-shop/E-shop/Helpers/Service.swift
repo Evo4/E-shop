@@ -59,6 +59,12 @@ class Service {
                         if obj.key == "message" {
                             completion(false)
                         } else if obj.key == "token" {
+                            self.findUserID(username: username) { (userID) in
+                                let token = obj.value as! String
+                                let user = User(id: userID, username: username, password: password, token: token)
+                                self.serializeCurrentUser(user: user)
+                                print("user: ", user)
+                            }
                             completion(true)
                         }
                     })

@@ -152,7 +152,7 @@ class SignInVC: UIViewController {
         if let username = usernameTextField.text, let password = passwordTextField.text {
             Service.shared.loginAccount(username: username, password: password) { [weak self] (reply) in
                 if reply {
-                    DispatchQueue.main.async {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
                         let mainVC = MainVC()
                         let navController = UINavigationController(rootViewController: mainVC)
                         navController.modalPresentationStyle = .fullScreen

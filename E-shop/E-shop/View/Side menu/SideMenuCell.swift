@@ -24,6 +24,14 @@ class SideMenuCell: UITableViewCell {
         return label
     }()
     
+    private lazy var button: UIButton = {
+        let b = UIButton()
+        b.translatesAutoresizingMaskIntoConstraints = false
+        b.addTarget(self, action: #selector(sideMenuAction), for: .touchUpInside)
+        return b
+    }()
+    
+    var callback: (()->())?
     var menuItem: MenuItem? {
         didSet {
             guard let item = self.menuItem else {return}
@@ -48,7 +56,7 @@ class SideMenuCell: UITableViewCell {
     }
     
     func setupConstraints() {
-        [itemImageView, itemNameLabel].forEach { (subview) in
+        [itemImageView, itemNameLabel, button].forEach { (subview) in
             self.addSubview(subview)
         }
         NSLayoutConstraint.activate([
@@ -59,6 +67,15 @@ class SideMenuCell: UITableViewCell {
             
             itemNameLabel.centerYAnchor.constraint(equalTo: self.centerYAnchor),
             itemNameLabel.leftAnchor.constraint(equalTo: itemImageView.rightAnchor, constant: 15),
+            
+            button.topAnchor.constraint(equalTo: self.topAnchor),
+            button.bottomAnchor.constraint(equalTo: self.bottomAnchor),
+            button.leftAnchor.constraint(equalTo: self.leftAnchor),
+            button.rightAnchor.constraint(equalTo: self.rightAnchor),
         ])
+    }
+    
+    @objc func sideMenuAction() {
+        callback?()
     }
 }
