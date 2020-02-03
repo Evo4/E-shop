@@ -29,7 +29,6 @@ class Service {
             if let error = err {
                 print("Failed to download image:", error)
             } else if let data = data {
-                print("Success")
                 print(response?.suggestedFilename ?? url.lastPathComponent)
                 DispatchQueue.main.async {
                     completion(data)
@@ -189,9 +188,6 @@ class Service {
                 do {
                     let reviews = try JSONDecoder().decode([Review].self, from: data)
                     completion(reviews)
-//                    reviews.forEach { (review) in
-//                        print(review)
-//                    }
                 } catch {
                     print(error)
                 }

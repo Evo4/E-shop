@@ -100,7 +100,6 @@ class ProductVC: UIViewController {
         Service.shared.getProductReviews(productID: productID) { (reviews) in
             DispatchQueue.main.async {
                 self.productCardView.reviews = reviews
-                self.productCardView.reviewsCollectionView.reloadData()
             }
         }
     }

@@ -41,7 +41,11 @@ class ProductCardView: UIView {
         return collectionView
     }()
     
-    var reviews: [Review] = []
+    var reviews: [Review] = [] {
+        didSet {
+            self.reviewsCollectionView.reloadData()
+        }
+    }
     
     override init(frame: CGRect) {
         super.init(frame: frame)

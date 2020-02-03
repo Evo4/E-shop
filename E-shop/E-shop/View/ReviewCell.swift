@@ -10,14 +10,6 @@ import UIKit
 
 class ReviewCell: UICollectionViewCell {
     
-    private lazy var reviewDateLabel: UILabel = {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.textColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
-        label.font = UIFont(name: "Raleway-Regular", size: 15)
-        return label
-    }()
-    
     private lazy var userLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -49,9 +41,7 @@ class ReviewCell: UICollectionViewCell {
             guard let review = self.review else {return}
             userLabel.text = review.created_by.username
             reviewLabel.text = review.text
-            reviewDateLabel.text = self.getReviewDate(stringDate: review.created_at)
             setupRateButtons(rate: review.rate)
-//            print(review.created_at)
         }
     }
     
@@ -71,14 +61,11 @@ class ReviewCell: UICollectionViewCell {
     }
     
     func setupConstraints() {
-        [reviewDateLabel, userLabel, rateStackView, reviewLabel].forEach { (subview) in
+        [userLabel, rateStackView, reviewLabel].forEach { (subview) in
             self.addSubview(subview)
         }
         NSLayoutConstraint.activate([
-            reviewDateLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 5),
-            reviewDateLabel.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 5),
-            
-            userLabel.topAnchor.constraint(equalTo: reviewDateLabel.bottomAnchor, constant: 3),
+            userLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 5),
             userLabel.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 5),
             
             rateStackView.topAnchor.constraint(equalTo: userLabel.bottomAnchor, constant: 3),
@@ -114,19 +101,4 @@ class ReviewCell: UICollectionViewCell {
             }
         }
     }
-    
-    func getReviewDate(stringDate: String)->String{
-        let isoDateFormatter = ISO8601DateFormatter()
-        guard let date = isoDateFormatter.date(from: stringDate) else {return ""}
-//        print("input date: \(stringDate)    iso date: \(date)")
-        
-        let dateFormatter = DateFormatter()
-        dateFormatter.locale = Locale.current
-        dateFormatter.dateFormat = "MMM d, yyyy"
-        
-        let formattedDate = dateFormatter.string(from: date)
-//        print("formatted: \(formattedDate)")
-        return formattedDate
-    }
-    
 }

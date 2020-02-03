@@ -17,7 +17,6 @@ struct Review: Decodable {
     let created_at: String
 }
 
-
 struct ReviewOwner: Decodable {
     let id: Int
     let username: String
