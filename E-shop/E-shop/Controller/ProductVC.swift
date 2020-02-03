@@ -54,7 +54,7 @@ class ProductVC: UIViewController {
             }
             productCardView.titleLabel.text = p.title
             productCardView.descriptionLabel.text = p.text
-            Service.shared.getProductReviews(productID: p.id)
+            self.getReviews(productID: p.id)
         }
     }
     
@@ -94,6 +94,15 @@ class ProductVC: UIViewController {
             productCardView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.8),
             productCardView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -20)
         ])
+    }
+    
+    func getReviews(productID: Int) {
+        Service.shared.getProductReviews(productID: productID) { (reviews) in
+            DispatchQueue.main.async {
+                self.productCardView.reviews = reviews
+                self.productCardView.reviewsCollectionView.reloadData()
+            }
+        }
     }
     
     @objc func openNewReviewVC() {

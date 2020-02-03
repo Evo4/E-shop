@@ -8,10 +8,20 @@
 
 import Foundation
 
-struct Review {
+struct Review: Decodable {
     let id: Int
     let product: Int
+    let rate: Int
     let text: String
-    let created_by: User
-    let created_at: Date
+    let created_by: ReviewOwner
+    let created_at: String
+}
+
+
+struct ReviewOwner: Decodable {
+    let id: Int
+    let username: String
+    let first_name: String?
+    let last_name: String?
+    let email: String?
 }

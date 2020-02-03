@@ -10,13 +10,19 @@ import UIKit
 
 class ReviewCell: UICollectionViewCell {
     
+    private lazy var reviewDateLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.textColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
+        label.font = UIFont(name: "Raleway-Regular", size: 15)
+        return label
+    }()
+    
     private lazy var userLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont(name: "Raleway-Bold", size: 15)
         label.textColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
-        label.text = "User"
-//        label.backgroundColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
         return label
     }()
     
@@ -34,9 +40,20 @@ class ReviewCell: UICollectionViewCell {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont(name: "Raleway-Regular", size: 15)
         label.textColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
-        label.text = "Review sample text"
+        label.numberOfLines = 0
         return label
     }()
+    
+    var review: Review? {
+        didSet {
+            guard let review = self.review else {return}
+            userLabel.text = review.created_by.username
+            reviewLabel.text = review.text
+            reviewDateLabel.text = self.getReviewDate(stringDate: review.created_at)
+            setupRateButtons(rate: review.rate)
+//            print(review.created_at)
+        }
+    }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -51,15 +68,17 @@ class ReviewCell: UICollectionViewCell {
     func setupAppearance() {
         self.backgroundColor = #colorLiteral(red: 0, green: 0.7689999938, blue: 0.2469999939, alpha: 0.25)
         self.layer.cornerRadius = 10
-        setupRateButtons()
     }
     
     func setupConstraints() {
-        [userLabel, rateStackView, reviewLabel].forEach { (subview) in
+        [reviewDateLabel, userLabel, rateStackView, reviewLabel].forEach { (subview) in
             self.addSubview(subview)
         }
         NSLayoutConstraint.activate([
-            userLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 5),
+            reviewDateLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 5),
+            reviewDateLabel.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 5),
+            
+            userLabel.topAnchor.constraint(equalTo: reviewDateLabel.bottomAnchor, constant: 3),
             userLabel.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 5),
             
             rateStackView.topAnchor.constraint(equalTo: userLabel.bottomAnchor, constant: 3),
@@ -73,12 +92,41 @@ class ReviewCell: UICollectionViewCell {
         ])
     }
     
-    func setupRateButtons() {
-        rateButons.forEach { (button) in
-            button.setImage(#imageLiteral(resourceName: "filled_star"), for: .normal)
-            NSLayoutConstraint.activate([
-                button.widthAnchor.constraint(equalToConstant: 10),
-            ])
+    func setupRateButtons(rate: Int) {
+        if rate > 0 {
+            for i in 0..<rate {
+                rateButons[i].setImage(#imageLiteral(resourceName: "filled_star"), for: .normal)
+            }
+            for i in rate..<rateButons.count {
+                rateButons[i].setImage(#imageLiteral(resourceName: "star"), for: .normal)
+            }
+            rateButons.forEach { (button) in
+                NSLayoutConstraint.activate([
+                    button.widthAnchor.constraint(equalToConstant: 10),
+                ])
+            }
+        } else {
+            rateButons.forEach { (button) in
+                button.setImage(#imageLiteral(resourceName: "star"), for: .normal)
+                NSLayoutConstraint.activate([
+                    button.widthAnchor.constraint(equalToConstant: 10),
+                ])
+            }
         }
     }
+    
+    func getReviewDate(stringDate: String)->String{
+        let isoDateFormatter = ISO8601DateFormatter()
+        guard let date = isoDateFormatter.date(from: stringDate) else {return ""}
+//        print("input date: \(stringDate)    iso date: \(date)")
+        
+        let dateFormatter = DateFormatter()
+        dateFormatter.locale = Locale.current
+        dateFormatter.dateFormat = "MMM d, yyyy"
+        
+        let formattedDate = dateFormatter.string(from: date)
+//        print("formatted: \(formattedDate)")
+        return formattedDate
+    }
+    
 }

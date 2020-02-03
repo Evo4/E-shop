@@ -173,7 +173,7 @@ class Service {
         }.resume()
     }
     
-    func getProductReviews(productID: Int) {
+    func getProductReviews(productID: Int, completion: @escaping ([Review])->()) {
         guard let url = URL(string: "http://smktesting.herokuapp.com/api/reviews/\(productID)?/") else {return}
         var request = URLRequest(url: url)
         request.httpMethod = "GET"
@@ -185,6 +185,17 @@ class Service {
             if let err = err {
                 print("Failed to load review", err)
             }
+            if let data = data {
+                do {
+                    let reviews = try JSONDecoder().decode([Review].self, from: data)
+                    completion(reviews)
+//                    reviews.forEach { (review) in
+//                        print(review)
+//                    }
+                } catch {
+                    print(error)
+                }
+            }
         }.resume()
     }
     
@@ -193,13 +204,17 @@ class Service {
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        let params = ["rate" : Int(5), "text" : "Test review"] as [String : Any]
+        
+        guard let httpBody = try? JSONSerialization.data(withJSONObject: params, options: []) else {return}
+        request.httpBody = httpBody
         URLSession.shared.dataTask(with: request) { (data, response, err) in
-            print("trying to post review")
+            print("Trying to post review")
             if let response = response {
-                print("review response:", response)
+                print(response)
             }
             if let err = err {
-                print("Failed to post review", err)
+                print("Failed to post review:",err)
             }
         }.resume()
     }

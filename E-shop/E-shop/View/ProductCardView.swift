@@ -41,6 +41,8 @@ class ProductCardView: UIView {
         return collectionView
     }()
     
+    var reviews: [Review] = []
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupAppearance()
@@ -87,11 +89,13 @@ class ProductCardView: UIView {
 
 extension ProductCardView: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 10
+        return reviews.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as? ReviewCell {
+            let review = reviews[indexPath.row]
+            cell.review = review
             return cell
         }
         return UICollectionViewCell()

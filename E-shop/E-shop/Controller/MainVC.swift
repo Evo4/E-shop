@@ -90,7 +90,7 @@ class MainVC: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         self.navigationController?.navigationBar.layer.zPosition = -1
-        loadProducts()
+        getProducts()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -142,7 +142,7 @@ class MainVC: UIViewController {
         ])
     }
     
-    func loadProducts() {
+    func getProducts() {
         Service.shared.loadProducts { [weak self] (products) in
             DispatchQueue.main.async {
                 self?.products = products

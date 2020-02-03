@@ -98,7 +98,7 @@ extension SnapPagingLayout {
             // Better way to scroll to a cell
             collectionView.scrollToItem(
                 at: IndexPath(row: indexOfMajorCell, section: 0),
-                at: centerPosition ? .centeredHorizontally : .left, // TODO: Left ignores inset
+                at: centerPosition ? .centeredHorizontally : .left,
                 animated: true
             )
 
