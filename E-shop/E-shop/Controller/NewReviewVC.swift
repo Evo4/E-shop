@@ -116,6 +116,6 @@ class NewReviewVC: UIViewController {
     }
     
     @objc func sendReviewAction() {
-        
+//        Service.shared.postReview()
     }
 }

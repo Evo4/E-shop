@@ -25,8 +25,8 @@ class Service {
     }
 
     func downloadImage(from url: URL, completion: @escaping (Data) -> ()) {
-        getData(from: url) { data, response, error in
-            if let error = error {
+        getData(from: url) { data, response, err in
+            if let error = err {
                 print("Failed to download image:", error)
             } else if let data = data {
                 print("Success")
@@ -169,6 +169,37 @@ class Service {
                     print(error)
                 }
                 
+            }
+        }.resume()
+    }
+    
+    func getProductReviews(productID: Int) {
+        guard let url = URL(string: "http://smktesting.herokuapp.com/api/reviews/\(productID)?/") else {return}
+        var request = URLRequest(url: url)
+        request.httpMethod = "GET"
+        print("product id:", productID)
+        URLSession.shared.dataTask(with: request) { (data, response, err) in
+            if let response = response {
+                print("review response:", response)
+            }
+            if let err = err {
+                print("Failed to load review", err)
+            }
+        }.resume()
+    }
+    
+    func postReview() {
+        guard let url = URL(string: "http://smktesting.herokuapp.com/api/reviews/1?/") else {return}
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        URLSession.shared.dataTask(with: request) { (data, response, err) in
+            print("trying to post review")
+            if let response = response {
+                print("review response:", response)
+            }
+            if let err = err {
+                print("Failed to post review", err)
             }
         }.resume()
     }

@@ -54,6 +54,7 @@ class ProductVC: UIViewController {
             }
             productCardView.titleLabel.text = p.title
             productCardView.descriptionLabel.text = p.text
+            Service.shared.getProductReviews(productID: p.id)
         }
     }
     
