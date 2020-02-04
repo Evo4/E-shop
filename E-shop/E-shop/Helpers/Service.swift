@@ -8,6 +8,11 @@
 
 import Foundation
 
+enum ServerResult<Success, Failure>{
+    case success(Success)
+    case failure(Failure)
+}
+
 class Service {
     
     static let shared = Service()
@@ -30,7 +35,7 @@ class Service {
         }
     }
     
-    func registerAccount(username: String, password: String, completion: @escaping (Bool)->()) {
+    func registerAccount(username: String, password: String, completion: @escaping (ServerResult<Void, String>)->()) {
         guard let url = URL(string: "http://smktesting.herokuapp.com/api/register/") else {return}
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
@@ -47,9 +52,9 @@ class Service {
                 do {
                     let dict = try JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions()) as? [String: Any]
                     dict?.forEach({ (obj) in
-                        print(obj)
                         if obj.key == "message" {
-                            completion(false)
+                            let errMessage = obj.value as! String
+                            completion(.failure(errMessage))
                         } else if obj.key == "token" {
                             self.findUserID(username: username) { (userID) in
                                 let token = obj.value as! String
@@ -57,7 +62,7 @@ class Service {
                                 self.serializeCurrentUser(user: user)
                                 print("user: ", user)
                             }
-                            completion(true)
+                            completion(.success(()))
                         }
                     })
                 } catch {
@@ -67,7 +72,7 @@ class Service {
         }.resume()
     }
     
-    func loginAccount(username: String, password: String, completion: @escaping (Bool)->()) {
+    func loginAccount(username: String, password: String, completion: @escaping (ServerResult<Void, String>)->()) {
         guard let url = URL(string: "http://smktesting.herokuapp.com/api/login/") else {return}
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
@@ -85,9 +90,9 @@ class Service {
                 do {
                     let dict = try JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions()) as? [String: Any]
                     dict?.forEach({ (obj) in
-                        print(obj)
                         if obj.key == "message" {
-                            completion(false)
+                            let errMessage = obj.value as! String
+                            completion(.failure(errMessage))
                         } else if obj.key == "token" {
                             self.findUserID(username: username) { (userID) in
                                 let token = obj.value as! String
@@ -95,7 +100,7 @@ class Service {
                                 self.serializeCurrentUser(user: user)
                                 print("user: ", user)
                             }
-                            completion(true)
+                            completion(.success(()))
                         }
                     })
                 } catch {

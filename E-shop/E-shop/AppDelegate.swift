@@ -20,25 +20,28 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window?.makeKeyAndVisible()
         
         user = Service.shared.deserializeUser()
-        print("app delegate user check:", user)
+        print("app delegate user check:", user!)
         if user != nil {
-            Service.shared.loginAccount(username: user!.username, password: user!.password) { (isLoggedIn) in
-                DispatchQueue.main.async { [weak self] in
-                    if isLoggedIn {
+            Service.shared.loginAccount(username: user!.username, password: user!.password) { (reply) in
+                switch reply {
+                case .success():
+                    DispatchQueue.main.async { [weak self] in
                         let vc = MainVC()
                         let navController = UINavigationController(rootViewController: vc)
                         self?.window?.rootViewController = navController
-                    } else {
-                        let vc = LoginVC()
-                        self?.window?.rootViewController = vc
                     }
+                    break
+                case .failure( _):
+                    let vc = LoginVC()
+                    self.window?.rootViewController = vc
+                    break
+                    
                 }
             }
         } else {
             let vc = LoginVC()
             window?.rootViewController = vc
         }
-
         return true
     }
 

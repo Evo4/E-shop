@@ -176,24 +176,25 @@ class SignUpVC: UIViewController {
     }
 
     @objc func registerAction() {
-        if usernameTextField.text != "" && passwordTextField.text != "" && repeatPasswordTextField.text != "" {
+        if usernameTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines) != "" && passwordTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines) != "" && repeatPasswordTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines) != "" {
             if passwordTextField.text == repeatPasswordTextField.text {
                 guard let username = usernameTextField.text,
                     let password = passwordTextField.text else {return}
                 Service.shared.registerAccount(username: username, password: password) { [weak self] (reply) in
-                    if reply {
+                    switch reply {
+                    case .success():
                         DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
                             let mainVC = MainVC()
                             let navController = UINavigationController(rootViewController: mainVC)
                             navController.modalPresentationStyle = .fullScreen
                             self?.present(navController, animated: true, completion: nil)
                         }
-                    } else {
-                        
+                        break
+                    case .failure(let err):
+                        print(err)
+                        break
                     }
                 }
-            } else {
-                
             }
         }
     }

@@ -156,10 +156,12 @@ class NewReviewVC: UIViewController {
     @objc func sendReviewAction() {
         print("truing to send review")
         guard let user = Service.shared.deserializeUser() else { return }
-        text = reviewTextView.text
-         
-        Service.shared.postReview(productID: productId, userToken: user.token, rate: rate, text: text)
-        self.dismiss(animated: true, completion: dismissVCCallback)
+        if reviewTextView.text.trimmingCharacters(in: .whitespacesAndNewlines) != "" {
+            text = reviewTextView.text
+             
+            Service.shared.postReview(productID: productId, userToken: user.token, rate: rate, text: text)
+            self.dismiss(animated: true, completion: dismissVCCallback)
+        }
     }
     
     func setupKeyboadObservers() {

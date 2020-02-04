@@ -152,8 +152,8 @@ class SignInVC: UIViewController {
         if let username = usernameTextField.text, let password = passwordTextField.text {
             self.showIndicator(onView: self.view)
             Service.shared.loginAccount(username: username, password: password) { [weak self] (reply) in
-                if reply {
-                    
+                switch reply {
+                case .success():
                     DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
                         let mainVC = MainVC()
                         let navController = UINavigationController(rootViewController: mainVC)
@@ -161,9 +161,24 @@ class SignInVC: UIViewController {
                         self?.present(navController, animated: true, completion: nil)
                         self?.removeIndicator()
                     }
-                } else {
-                    
+                    break
+                case .failure(let err):
+                    print(err)
+                    break
                 }
+                
+//                if reply {
+//
+//                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+//                        let mainVC = MainVC()
+//                        let navController = UINavigationController(rootViewController: mainVC)
+//                        navController.modalPresentationStyle = .fullScreen
+//                        self?.present(navController, animated: true, completion: nil)
+//                        self?.removeIndicator()
+//                    }
+//                } else {
+//
+//                }
             }
         }
     }
