@@ -35,6 +35,7 @@
 		119D267523E18B9D00EC38C6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 119D267323E18B9D00EC38C6 /* LaunchScreen.storyboard */; };
 		119D268023E18B9D00EC38C6 /* E_shopTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 119D267F23E18B9D00EC38C6 /* E_shopTests.swift */; };
 		119D268B23E18B9D00EC38C6 /* E_shopUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 119D268A23E18B9D00EC38C6 /* E_shopUITests.swift */; };
+		11C5239823E9F94300AF5BC5 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11C5239723E9F94300AF5BC5 /* Extensions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -89,6 +90,7 @@
 		119D268623E18B9D00EC38C6 /* E-shopUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "E-shopUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		119D268A23E18B9D00EC38C6 /* E_shopUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = E_shopUITests.swift; sourceTree = "<group>"; };
 		119D268C23E18B9D00EC38C6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		11C5239723E9F94300AF5BC5 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -122,6 +124,7 @@
 				1191278123E4BF40000F54E9 /* ColumnFlowLayout.swift */,
 				1191279423E739A0000F54E9 /* SnapPagingLayout.swift */,
 				1191277D23E4BE4C000F54E9 /* Service.swift */,
+				11C5239723E9F94300AF5BC5 /* Extensions.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -368,6 +371,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				11C5239823E9F94300AF5BC5 /* Extensions.swift in Sources */,
 				1191277A23E4BDD3000F54E9 /* SignUpVC.swift in Sources */,
 				119D266D23E18B9B00EC38C6 /* LoginVC.swift in Sources */,
 				119D266923E18B9B00EC38C6 /* AppDelegate.swift in Sources */,

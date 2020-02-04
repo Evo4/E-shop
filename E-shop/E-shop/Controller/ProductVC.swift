@@ -110,5 +110,10 @@ class ProductVC: UIViewController {
         newReviewVC.productId = product?.id
         let navController = UINavigationController(rootViewController: newReviewVC)
         self.present(navController, animated: true, completion: nil)
+        
+        newReviewVC.dismissVCCallback = { [weak self] in
+            guard let id = self?.product?.id else {return}
+            self?.getReviews(productID: id)
+        }
     }
 }

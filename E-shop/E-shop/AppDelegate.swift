@@ -22,14 +22,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         user = Service.shared.deserializeUser()
         print("app delegate user check:", user)
         if user != nil {
-            let vc = MainVC()
-            let navController = UINavigationController(rootViewController: vc)
-            window?.rootViewController = navController
+            Service.shared.loginAccount(username: user!.username, password: user!.password) { (isLoggedIn) in
+                DispatchQueue.main.async { [weak self] in
+                    if isLoggedIn {
+                        let vc = MainVC()
+                        let navController = UINavigationController(rootViewController: vc)
+                        self?.window?.rootViewController = navController
+                    } else {
+                        let vc = LoginVC()
+                        self?.window?.rootViewController = vc
+                    }
+                }
+            }
         } else {
             let vc = LoginVC()
             window?.rootViewController = vc
         }
-        
+
         return true
     }
 

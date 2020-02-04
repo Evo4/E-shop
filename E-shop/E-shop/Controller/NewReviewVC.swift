@@ -73,6 +73,7 @@ class NewReviewVC: UIViewController {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
+        dismissVCCallback?()
     }
     
     func setupAppearance() {
@@ -158,6 +159,7 @@ class NewReviewVC: UIViewController {
         text = reviewTextView.text
          
         Service.shared.postReview(productID: productId, userToken: user.token, rate: rate, text: text)
+        self.dismiss(animated: true, completion: dismissVCCallback)
     }
     
     func setupKeyboadObservers() {
