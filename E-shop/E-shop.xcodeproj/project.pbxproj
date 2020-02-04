@@ -36,6 +36,7 @@
 		119D268023E18B9D00EC38C6 /* E_shopTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 119D267F23E18B9D00EC38C6 /* E_shopTests.swift */; };
 		119D268B23E18B9D00EC38C6 /* E_shopUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 119D268A23E18B9D00EC38C6 /* E_shopUITests.swift */; };
 		11C5239823E9F94300AF5BC5 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11C5239723E9F94300AF5BC5 /* Extensions.swift */; };
+		11C5239A23EA133100AF5BC5 /* AlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11C5239923EA133100AF5BC5 /* AlertView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -91,6 +92,7 @@
 		119D268A23E18B9D00EC38C6 /* E_shopUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = E_shopUITests.swift; sourceTree = "<group>"; };
 		119D268C23E18B9D00EC38C6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		11C5239723E9F94300AF5BC5 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		11C5239923EA133100AF5BC5 /* AlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -158,6 +160,7 @@
 				1191277F23E4BE83000F54E9 /* ProductCell.swift */,
 				1191279623E73DF4000F54E9 /* ReviewCell.swift */,
 				1191279023E63DFC000F54E9 /* ProductCardView.swift */,
+				11C5239923EA133100AF5BC5 /* AlertView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -376,6 +379,7 @@
 				119D266D23E18B9B00EC38C6 /* LoginVC.swift in Sources */,
 				119D266923E18B9B00EC38C6 /* AppDelegate.swift in Sources */,
 				1191277823E4BDA7000F54E9 /* SignInVC.swift in Sources */,
+				11C5239A23EA133100AF5BC5 /* AlertView.swift in Sources */,
 				1191278D23E4C0AA000F54E9 /* ProductVC.swift in Sources */,
 				1191277323E4BCDC000F54E9 /* EnterButton.swift in Sources */,
 				1191279123E63DFC000F54E9 /* ProductCardView.swift in Sources */,

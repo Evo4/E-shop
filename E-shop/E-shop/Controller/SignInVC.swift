@@ -166,19 +166,6 @@ class SignInVC: UIViewController {
                     print(err)
                     break
                 }
-                
-//                if reply {
-//
-//                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-//                        let mainVC = MainVC()
-//                        let navController = UINavigationController(rootViewController: mainVC)
-//                        navController.modalPresentationStyle = .fullScreen
-//                        self?.present(navController, animated: true, completion: nil)
-//                        self?.removeIndicator()
-//                    }
-//                } else {
-//
-//                }
             }
         }
     }

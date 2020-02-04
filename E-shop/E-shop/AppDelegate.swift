@@ -35,7 +35,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                     let vc = LoginVC()
                     self.window?.rootViewController = vc
                     break
-                    
                 }
             }
         } else {
