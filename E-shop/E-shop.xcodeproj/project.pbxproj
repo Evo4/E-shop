@@ -120,8 +120,8 @@
 			isa = PBXGroup;
 			children = (
 				1191278123E4BF40000F54E9 /* ColumnFlowLayout.swift */,
-				1191277D23E4BE4C000F54E9 /* Service.swift */,
 				1191279423E739A0000F54E9 /* SnapPagingLayout.swift */,
+				1191277D23E4BE4C000F54E9 /* Service.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";

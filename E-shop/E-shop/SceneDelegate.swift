@@ -22,9 +22,21 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
             user = Service.shared.deserializeUser()
             if user != nil {
-                let vc = MainVC()
-                let navController = UINavigationController(rootViewController: vc)
-                window?.rootViewController = navController
+                Service.shared.loginAccount(username: user!.username, password: user!.password) { (isLoggedIn) in
+                    DispatchQueue.main.async {
+                        if isLoggedIn {
+                            let vc = MainVC()
+                            let navController = UINavigationController(rootViewController: vc)
+                            self.window?.rootViewController = navController
+                        } else {
+                            let vc = LoginVC()
+                            self.window?.rootViewController = vc
+                        }
+                    }
+                }
+                
+                
+                
             } else {
                 let vc = LoginVC()
                 window?.rootViewController = vc

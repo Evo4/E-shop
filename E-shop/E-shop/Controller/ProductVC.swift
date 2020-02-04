@@ -99,13 +99,15 @@ class ProductVC: UIViewController {
     func getReviews(productID: Int) {
         Service.shared.getProductReviews(productID: productID) { (reviews) in
             DispatchQueue.main.async {
-                self.productCardView.reviews = reviews
+                let sortedReviews = reviews.sorted(by: {$0.id > $1.id})
+                self.productCardView.reviews = sortedReviews
             }
         }
     }
     
     @objc func openNewReviewVC() {
         let newReviewVC = NewReviewVC()
+        newReviewVC.productId = product?.id
         let navController = UINavigationController(rootViewController: newReviewVC)
         self.present(navController, animated: true, completion: nil)
     }

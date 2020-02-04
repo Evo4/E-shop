@@ -222,56 +222,32 @@ class Service {
 //        }.resume()
 //    }
     
-    func postReview() {
-        guard let url = URL(string: "http://smktesting.herokuapp.com/api/reviews/2") else {return}
+    func postReview(productID: Int, userToken: String, rate: Int, text: String) {
+        guard let url = URL(string: "http://smktesting.herokuapp.com/api/reviews/\(productID)") else {return}
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-        let params = [
-            "id": 33,
-            "product": 2,
-            "rate": 3,
-            "text": "good enough",
-            "created_by": [
-                "id": 1,
-                "username": "user",
-                "first_name": "",
-                "last_name": "",
-                "email": "user@user.com"
-            ],
-            "created_at": "2013-12-19T00:00:00Z"
-        ] as [String : Any]
-        
+        request.addValue("Token \(userToken)", forHTTPHeaderField: "Authorization")
+        let params = ["rate": rate, "text": text] as [String : Any]
         if JSONSerialization.isValidJSONObject(params) {
             print("JSON valid")
-        } else {
-            print("JSON invalid")
         }
         
         guard let httpBody = try? JSONSerialization.data(withJSONObject: params, options: []) else {return}
-        let stringData = String(data: httpBody, encoding: .utf8)
-        print(stringData)
         request.httpBody = httpBody
-        
         URLSession.shared.dataTask(with: request) { (data, response, err) in
-            print("Trying to post review")
-            if let response = response {
-                print(response)
-            }
             if let err = err {
-                print("Failed to post review:",err)
+                print("Failed to post review: ", err)
+            }
+            if let response = response {
+                print("Post review response: ", response)
             }
             if let data = data {
                 let stringData = String(data: data, encoding: .utf8)
                 print(stringData)
-//                do {
-//                    let dict = try JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions()) as? Int
-//                    print(dict)
-//                } catch {
-//                    print(error)
-//                }
             }
         }.resume()
+        
     }
     
     //MARK: - UserDefaults methods

@@ -58,11 +58,21 @@ class NewReviewVC: UIViewController {
     }()
     var reviewTextViewBottomAnchor: NSLayoutConstraint!
     
+    var rate: Int = 0
+    var text: String = ""
+    var productId: Int!
+    var dismissVCCallback: (()->())?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupAppearance()
         setupConstraints()
         setupKeyboadObservers()
+        
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
     }
     
     func setupAppearance() {
@@ -122,6 +132,7 @@ class NewReviewVC: UIViewController {
     
     @objc func setRateAction(sender: UIButton) {
         let rate = sender.tag
+        self.rate = rate
         setupRateButtons(rate: rate)
     }
     
@@ -142,7 +153,11 @@ class NewReviewVC: UIViewController {
     }
     
     @objc func sendReviewAction() {
-        Service.shared.postReview()
+        print("truing to send review")
+        guard let user = Service.shared.deserializeUser() else { return }
+        text = reviewTextView.text
+         
+        Service.shared.postReview(productID: productId, userToken: user.token, rate: rate, text: text)
     }
     
     func setupKeyboadObservers() {
