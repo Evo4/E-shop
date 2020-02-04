@@ -108,11 +108,6 @@ extension SideMenuView: UITableViewDelegate, UITableViewDataSource {
         case 0:
             break
         case 1:
-            let dictionary = Service.shared.defs.dictionaryRepresentation()
-            dictionary.keys.forEach { key in
-//                defaults.removeObject(forKey: key)
-                print(key)
-            }
             Service.shared.defs.removeObject(forKey: "user")
             callback?(LoginVC())
             break

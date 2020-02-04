@@ -70,7 +70,7 @@ class ReviewCell: UICollectionViewCell {
             
             rateStackView.topAnchor.constraint(equalTo: userLabel.bottomAnchor, constant: 3),
             rateStackView.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 5),
-            rateStackView.heightAnchor.constraint(equalToConstant: 10),
+            rateStackView.heightAnchor.constraint(equalToConstant: 12),
 
             reviewLabel.topAnchor.constraint(equalTo: rateStackView.bottomAnchor, constant: 8),
             reviewLabel.bottomAnchor.constraint(lessThanOrEqualTo: self.bottomAnchor, constant: -5),
@@ -82,21 +82,23 @@ class ReviewCell: UICollectionViewCell {
     func setupRateButtons(rate: Int) {
         if rate > 0 {
             for i in 0..<rate {
-                rateButons[i].setImage(#imageLiteral(resourceName: "filled_star"), for: .normal)
+                rateButons[i].setImage(#imageLiteral(resourceName: "filled_star").withRenderingMode(.alwaysTemplate), for: .normal)
             }
             for i in rate..<rateButons.count {
-                rateButons[i].setImage(#imageLiteral(resourceName: "star"), for: .normal)
+                rateButons[i].setImage(#imageLiteral(resourceName: "star").withRenderingMode(.alwaysTemplate), for: .normal)
             }
             rateButons.forEach { (button) in
+                button.tintColor = #colorLiteral(red: 0.9960784314, green: 0.5098039216, blue: 0.02745098039, alpha: 1)
                 NSLayoutConstraint.activate([
-                    button.widthAnchor.constraint(equalToConstant: 10),
+                    button.widthAnchor.constraint(equalToConstant: 12),
                 ])
             }
         } else {
             rateButons.forEach { (button) in
-                button.setImage(#imageLiteral(resourceName: "star"), for: .normal)
+                button.setImage(#imageLiteral(resourceName: "star").withRenderingMode(.alwaysTemplate), for: .normal)
+                button.tintColor = #colorLiteral(red: 0.9960784314, green: 0.5098039216, blue: 0.02745098039, alpha: 1)
                 NSLayoutConstraint.activate([
-                    button.widthAnchor.constraint(equalToConstant: 10),
+                    button.widthAnchor.constraint(equalToConstant: 12),
                 ])
             }
         }

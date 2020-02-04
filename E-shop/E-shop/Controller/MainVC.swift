@@ -143,7 +143,7 @@ class MainVC: UIViewController {
     }
     
     func getProducts() {
-        Service.shared.loadProducts { [weak self] (products) in
+        Service.shared.getProducts { [weak self] (products) in
             DispatchQueue.main.async {
                 self?.products = products
                 self?.collectionView.reloadData()

@@ -51,15 +51,18 @@ class NewReviewVC: UIViewController {
         textView.translatesAutoresizingMaskIntoConstraints = false
         textView.tintColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
         textView.font = UIFont(name: "Raleway-Regular", size: 17)
+        textView.layer.cornerRadius = 10
         textView.layer.borderWidth = 1
-        textView.layer.borderColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
+        textView.layer.borderColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 0.5)
         return textView
     }()
+    var reviewTextViewBottomAnchor: NSLayoutConstraint!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setupAppearance()
         setupConstraints()
+        setupKeyboadObservers()
     }
     
     func setupAppearance() {
@@ -86,6 +89,7 @@ class NewReviewVC: UIViewController {
         [rateStackView, reviewLabel, reviewTextView].forEach { (subview) in
             view.addSubview(subview)
         }
+        reviewTextViewBottomAnchor = reviewTextView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -10)
         NSLayoutConstraint.activate([
             rateStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
             rateStackView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 20),
@@ -98,16 +102,38 @@ class NewReviewVC: UIViewController {
             reviewTextView.topAnchor.constraint(equalTo: reviewLabel.bottomAnchor, constant: 4),
             reviewTextView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 20),
             reviewTextView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -20),
-            reviewTextView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -10),
+            reviewTextViewBottomAnchor!
         ])
     }
     
     func setupRateButtons() {
+        var tag = 1
         rateButons.forEach { (button) in
-            button.setImage(#imageLiteral(resourceName: "star"), for: .normal)
+            button.tag = tag
+            button.setImage(#imageLiteral(resourceName: "star").withRenderingMode(.alwaysTemplate), for: .normal)
+            button.tintColor = #colorLiteral(red: 0.9960784314, green: 0.5098039216, blue: 0.02745098039, alpha: 1)
             NSLayoutConstraint.activate([
                 button.widthAnchor.constraint(equalToConstant: 40),
             ])
+            tag += 1
+            button.addTarget(self, action: #selector(setRateAction(sender:)), for: .touchUpInside)
+        }
+    }
+    
+    @objc func setRateAction(sender: UIButton) {
+        let rate = sender.tag
+        setupRateButtons(rate: rate)
+    }
+    
+    func setupRateButtons(rate: Int) {
+        for i in 0..<rate {
+            rateButons[i].setImage(#imageLiteral(resourceName: "filled_star").withRenderingMode(.alwaysTemplate), for: .normal)
+        }
+        for i in rate..<rateButons.count {
+            rateButons[i].setImage(#imageLiteral(resourceName: "star").withRenderingMode(.alwaysTemplate), for: .normal)
+        }
+        rateButons.forEach { (button) in
+            button.tintColor = #colorLiteral(red: 0.9960784314, green: 0.5098039216, blue: 0.02745098039, alpha: 1)
         }
     }
     
@@ -117,5 +143,26 @@ class NewReviewVC: UIViewController {
     
     @objc func sendReviewAction() {
         Service.shared.postReview()
+    }
+    
+    func setupKeyboadObservers() {
+        NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardWillShow), name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+    
+    @objc func handleKeyboardWillShow(notification: NSNotification) {
+        let keyboardFrame = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as! NSValue).cgRectValue
+        guard let keyboardAnimationDuration = notification.userInfo?[UIResponder.keyboardAnimationDurationUserInfoKey] as? Double else {return}
+        if notification.name == UIResponder.keyboardWillShowNotification {
+            reviewTextViewBottomAnchor.constant = -(keyboardFrame.height + 10)
+            UIView.animate(withDuration: keyboardAnimationDuration) {
+                self.view.layoutIfNeeded()
+            }
+        } else {
+            reviewTextViewBottomAnchor?.constant = -10
+            UIView.animate(withDuration: keyboardAnimationDuration) {
+                self.view.layoutIfNeeded()
+            }
+        }
     }
 }
