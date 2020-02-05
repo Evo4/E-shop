@@ -140,7 +140,7 @@ class MainVC: UIViewController {
             sideMenuView.topAnchor.constraint(equalTo: sideMenuBackView.topAnchor),
             sideMenuRightAnchor!,
             sideMenuView.bottomAnchor.constraint(equalTo: sideMenuBackView.bottomAnchor),
-            sideMenuView.widthAnchor.constraint(equalTo: sideMenuBackView.widthAnchor, multiplier: 0.6),
+            sideMenuView.widthAnchor.constraint(equalTo: sideMenuBackView.widthAnchor, multiplier: 0.7),
         ])
     }
     
@@ -177,16 +177,21 @@ class MainVC: UIViewController {
             sideMenuLeftAnchor.constant = constant
         }
         if sender.state == UIPanGestureRecognizer.State.ended {
-            if velocity.x <= -550 || constant <= 85 {
-                sideMenuLeftAnchor.constant = 0
-                isMenuHidden = !isMenuHidden
-                return
-            }
-            if constant >= -85 {
+            if constant >= -105 {
+                if velocity.x <= -650 {
+                    sideMenuLeftAnchor.constant = 0
+                    isMenuHidden = !isMenuHidden
+                    return
+                }
                 UIView.animate(withDuration: 0.3) { [weak self] in
                     self?.sideMenuLeftAnchor.constant = 0
                     self?.view.layoutIfNeeded()
                 }
+                return
+            }
+            if constant <= 105 {
+                sideMenuLeftAnchor.constant = 0
+                isMenuHidden = !isMenuHidden
                 return
             }
         }
