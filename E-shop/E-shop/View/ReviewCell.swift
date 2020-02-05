@@ -13,7 +13,7 @@ class ReviewCell: UICollectionViewCell {
     private lazy var userLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = UIFont(name: "Raleway-Bold", size: 15)
+        label.font = UIFont(name: "Raleway-Bold", size: 17)
         label.textColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
         return label
     }()
@@ -27,20 +27,21 @@ class ReviewCell: UICollectionViewCell {
         return stackView
     }()
     
-    private lazy var reviewLabel: UILabel = {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = UIFont(name: "Raleway-Regular", size: 15)
-        label.textColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
-        label.numberOfLines = 0
-        return label
+    private lazy var reviewTextView: UITextView = {
+        let textView = UITextView()
+        textView.translatesAutoresizingMaskIntoConstraints = false
+        textView.font = UIFont(name: "Raleway-Regular", size: 17)
+        textView.textColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
+        textView.isEditable = false
+        textView.backgroundColor = .clear
+        return textView
     }()
     
     var review: Review? {
         didSet {
             guard let review = self.review else {return}
             userLabel.text = review.created_by.username
-            reviewLabel.text = review.text
+            reviewTextView.text = review.text
             setupRateButtons(rate: review.rate)
         }
     }
@@ -61,21 +62,21 @@ class ReviewCell: UICollectionViewCell {
     }
     
     func setupConstraints() {
-        [userLabel, rateStackView, reviewLabel].forEach { (subview) in
+        [userLabel, rateStackView, reviewTextView].forEach { (subview) in
             self.addSubview(subview)
         }
         NSLayoutConstraint.activate([
             userLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 5),
-            userLabel.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 5),
+            userLabel.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 8),
             
             rateStackView.topAnchor.constraint(equalTo: userLabel.bottomAnchor, constant: 3),
-            rateStackView.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 5),
+            rateStackView.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 8),
             rateStackView.heightAnchor.constraint(equalToConstant: 12),
 
-            reviewLabel.topAnchor.constraint(equalTo: rateStackView.bottomAnchor, constant: 8),
-            reviewLabel.bottomAnchor.constraint(lessThanOrEqualTo: self.bottomAnchor, constant: -5),
-            reviewLabel.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 5),
-            reviewLabel.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -5),
+            reviewTextView.topAnchor.constraint(equalTo: rateStackView.bottomAnchor, constant: 8),
+            reviewTextView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -5),
+            reviewTextView.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 5),
+            reviewTextView.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -5),
         ])
     }
     

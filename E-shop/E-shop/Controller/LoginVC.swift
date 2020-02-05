@@ -10,6 +10,10 @@ import UIKit
 
 class LoginVC: UIViewController {
 
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+           return .default
+    }
+    
     private lazy var logoImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false

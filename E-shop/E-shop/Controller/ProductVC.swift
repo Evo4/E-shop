@@ -10,6 +10,10 @@ import UIKit
 
 class ProductVC: UIViewController {
 
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+           return .lightContent
+    }
+    
     private lazy var addReviewButton: UIButton = {
         let button = UIButton()
         button.setTitle("Add review", for: .normal)

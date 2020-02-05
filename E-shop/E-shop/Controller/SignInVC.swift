@@ -10,6 +10,10 @@ import UIKit
 
 class SignInVC: UIViewController {
 
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+           return .default
+    }
+    
     private lazy var topView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -155,7 +159,7 @@ class SignInVC: UIViewController {
             guard let username = usernameTextField.text,
                 let password = passwordTextField.text else {return}
             self.showIndicator(onView: self.view)
-            
+            self.view.endEditing(true)
             Service.shared.loginAccount(username: username, password: password) { [weak self] (reply) in
                 switch reply {
                 case .success(_):

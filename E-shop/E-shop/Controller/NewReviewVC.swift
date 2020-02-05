@@ -10,6 +10,10 @@ import UIKit
 
 class NewReviewVC: UIViewController {
 
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+           return .lightContent
+    }
+    
     let rateButons:[UIButton] = [UIButton(), UIButton(), UIButton(), UIButton(), UIButton()]
     
     private lazy var closeButton: UIButton = {
@@ -154,14 +158,19 @@ class NewReviewVC: UIViewController {
     }
     
     @objc func sendReviewAction() {
-        guard let user = Service.shared.deserializeUser() else { return }
+        guard let user = Service.shared.deserializeUser() else {
+            let text = "Sign in to post reviews"
+            self.view.endEditing(true)
+            showAlert(view: self.view, alertType: .error, text: text)
+            return
+        }
         if reviewTextView.text.trimmingCharacters(in: .whitespacesAndNewlines) != "" {
             text = reviewTextView.text
              
             Service.shared.postReview(productID: productId, userToken: user.token, rate: rate, text: text)
-//            self.dismiss(animated: true, completion: dismissVCCallback)
             
-            let text = "Review added"
+            let text = "Review posted"
+            self.view.endEditing(true)
             showAlert(view: self.view, alertType: .done, text: text)
             
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [weak self] in
@@ -169,6 +178,7 @@ class NewReviewVC: UIViewController {
             }
         } else {
             let text = "Write a review text"
+            self.view.endEditing(true)
             showAlert(view: self.view, alertType: .error, text: text)
         }
     }

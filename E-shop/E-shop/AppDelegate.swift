@@ -20,7 +20,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window?.makeKeyAndVisible()
         
         user = Service.shared.deserializeUser()
-        print("app delegate user check:", user)
         if user != nil {
             Service.shared.loginAccount(username: user!.username, password: user!.password) { (reply) in
                 switch reply {

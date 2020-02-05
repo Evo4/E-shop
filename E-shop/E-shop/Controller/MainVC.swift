@@ -10,6 +10,10 @@ import UIKit
 
 class MainVC: UIViewController {
 
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+           return .lightContent
+    }
+    
     private lazy var menuButton: UIButton = {
         let button = UIButton()
         button.backgroundColor = .clear
@@ -77,8 +81,6 @@ class MainVC: UIViewController {
         
         DispatchQueue.main.async {
             self.user = Service.shared.deserializeUser()
-            print("saved user:")
-            print(self.user)
         }
         
         sideMenuView.callback = { viewController in
