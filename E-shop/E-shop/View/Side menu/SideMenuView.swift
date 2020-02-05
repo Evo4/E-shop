@@ -13,7 +13,7 @@ class SideMenuView: UIView {
     private lazy var logoImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.image = #imageLiteral(resourceName: "icon").withRenderingMode(.alwaysTemplate)
+        imageView.image = #imageLiteral(resourceName: "logo").withRenderingMode(.alwaysTemplate)
         imageView.tintColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
         imageView.backgroundColor = .clear
         imageView.contentMode = .scaleAspectFit

@@ -17,7 +17,7 @@ class LoginVC: UIViewController {
     private lazy var logoImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.image = #imageLiteral(resourceName: "icon.png")
+        imageView.image = #imageLiteral(resourceName: "logo")
         imageView.contentMode = .scaleAspectFit
         return imageView
     }()

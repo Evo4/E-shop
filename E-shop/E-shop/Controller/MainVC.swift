@@ -37,7 +37,7 @@ class MainVC: UIViewController {
     private lazy var sideMenuBackView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 0.3)
+        view.backgroundColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 0.35)
         view.alpha = 0
         return view
     }()
