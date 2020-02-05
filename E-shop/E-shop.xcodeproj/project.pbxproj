@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		112F2BB923EB813000B1ABF8 /* SettingsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 112F2BB823EB813000B1ABF8 /* SettingsVC.swift */; };
 		1191276F23E4BC52000F54E9 /* Raleway-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1191276D23E4BC51000F54E9 /* Raleway-Bold.ttf */; };
 		1191277023E4BC52000F54E9 /* Raleway-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1191276E23E4BC51000F54E9 /* Raleway-Regular.ttf */; };
 		1191277323E4BCDC000F54E9 /* EnterButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1191277123E4BCDC000F54E9 /* EnterButton.swift */; };
@@ -57,6 +58,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		112F2BB823EB813000B1ABF8 /* SettingsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsVC.swift; sourceTree = "<group>"; };
 		1191276D23E4BC51000F54E9 /* Raleway-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Raleway-Bold.ttf"; sourceTree = "<group>"; };
 		1191276E23E4BC51000F54E9 /* Raleway-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Raleway-Regular.ttf"; sourceTree = "<group>"; };
 		1191277123E4BCDC000F54E9 /* EnterButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EnterButton.swift; sourceTree = "<group>"; };
@@ -174,6 +176,7 @@
 				1191277B23E4BDED000F54E9 /* MainVC.swift */,
 				1191278C23E4C0AA000F54E9 /* ProductVC.swift */,
 				1191279223E72DED000F54E9 /* NewReviewVC.swift */,
+				112F2BB823EB813000B1ABF8 /* SettingsVC.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -383,6 +386,7 @@
 				1191278D23E4C0AA000F54E9 /* ProductVC.swift in Sources */,
 				1191277323E4BCDC000F54E9 /* EnterButton.swift in Sources */,
 				1191279123E63DFC000F54E9 /* ProductCardView.swift in Sources */,
+				112F2BB923EB813000B1ABF8 /* SettingsVC.swift in Sources */,
 				1191279523E739A0000F54E9 /* SnapPagingLayout.swift in Sources */,
 				1191277E23E4BE4C000F54E9 /* Service.swift in Sources */,
 				1191278F23E4D12C000F54E9 /* User.swift in Sources */,
