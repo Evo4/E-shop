@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-var loadingIndicatorView : UIView?
+var accessoryView : UIView?
 
 extension UIViewController {
     func showIndicator(onView : UIView) {
@@ -24,13 +24,47 @@ extension UIViewController {
             onView.addSubview(indicatorView)
         }
         
-        loadingIndicatorView = indicatorView
+        accessoryView = indicatorView
     }
     
     func removeIndicator() {
         DispatchQueue.main.async {
-            loadingIndicatorView?.removeFromSuperview()
-            loadingIndicatorView = nil
+            accessoryView?.removeFromSuperview()
+            accessoryView = nil
         }
     }
+    
+    
+    func setupAlertView(onView : UIView, alertType: AlertType, text: String) {
+        let alertView = AlertView(frame: CGRect(x: 0, y: 0, width: 200, height: 200))
+        alertView.center = onView.center
+        alertView.alertType = alertType
+        alertView.alertLabel.text = text
+        DispatchQueue.main.async {
+            onView.addSubview(alertView)
+        }
+        
+        accessoryView = alertView
+    }
+    
+    func removeAlertView() {
+        DispatchQueue.main.async {
+            accessoryView?.removeFromSuperview()
+            accessoryView = nil
+        }
+    }
+    
+    func showAlert(view: UIView, alertType: AlertType, text: String) {
+        UIView.animate(withDuration: 0.5) {
+            DispatchQueue.main.async { [weak self] in
+                self?.setupAlertView(onView: view, alertType: alertType, text: text)
+            }
+        }
+        UIView.animate(withDuration: 0.5) {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [weak self] in
+                self?.removeAlertView()
+            }
+        }
+    }
+
 }

@@ -24,7 +24,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             if user != nil {
                 Service.shared.loginAccount(username: user!.username, password: user!.password) { (reply) in
                     switch reply {
-                    case .success():
+                    case .success(_):
                         DispatchQueue.main.async { [weak self] in
                             let vc = MainVC()
                             let navController = UINavigationController(rootViewController: vc)
@@ -35,7 +35,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                         let vc = LoginVC()
                         self.window?.rootViewController = vc
                         break
-                        
                     }
                 }
             } else {

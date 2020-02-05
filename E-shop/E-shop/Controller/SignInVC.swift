@@ -149,11 +149,16 @@ class SignInVC: UIViewController {
     }
     
     @objc func loginAction() {
-        if let username = usernameTextField.text, let password = passwordTextField.text {
+        if usernameTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines) != "",
+            passwordTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines) != "" {
+            
+            guard let username = usernameTextField.text,
+                let password = passwordTextField.text else {return}
             self.showIndicator(onView: self.view)
+            
             Service.shared.loginAccount(username: username, password: password) { [weak self] (reply) in
                 switch reply {
-                case .success():
+                case .success(_):
                     DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
                         let mainVC = MainVC()
                         let navController = UINavigationController(rootViewController: mainVC)
@@ -163,10 +168,16 @@ class SignInVC: UIViewController {
                     }
                     break
                 case .failure(let err):
-                    print(err)
+                    self?.removeIndicator()
+                    DispatchQueue.main.async {
+                        self?.showAlert(view: self!.view, alertType: .error, text: err)
+                    }
                     break
                 }
             }
+        } else {
+            let text = "Fill all fields to sign in"
+            showAlert(view: self.view, alertType: .error, text: text)
         }
     }
 }

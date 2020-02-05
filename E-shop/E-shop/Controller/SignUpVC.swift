@@ -177,9 +177,12 @@ class SignUpVC: UIViewController {
 
     @objc func registerAction() {
         if usernameTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines) != "" && passwordTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines) != "" && repeatPasswordTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines) != "" {
+            
             if passwordTextField.text == repeatPasswordTextField.text {
                 guard let username = usernameTextField.text,
                     let password = passwordTextField.text else {return}
+                
+                self.showIndicator(onView: self.view)
                 Service.shared.registerAccount(username: username, password: password) { [weak self] (reply) in
                     switch reply {
                     case .success():
@@ -188,14 +191,21 @@ class SignUpVC: UIViewController {
                             let navController = UINavigationController(rootViewController: mainVC)
                             navController.modalPresentationStyle = .fullScreen
                             self?.present(navController, animated: true, completion: nil)
+                            self?.removeIndicator()
                         }
                         break
                     case .failure(let err):
-                        print(err)
+                        self?.removeIndicator()
+                        DispatchQueue.main.async {
+                            self?.showAlert(view: self!.view, alertType: .error, text: err)
+                        }
                         break
                     }
                 }
             }
+        } else {
+            let text = "Fill all fields to sign up"
+            showAlert(view: self.view, alertType: .error, text: text)
         }
     }
 }

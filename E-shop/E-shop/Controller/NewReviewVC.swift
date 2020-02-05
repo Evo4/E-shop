@@ -154,13 +154,22 @@ class NewReviewVC: UIViewController {
     }
     
     @objc func sendReviewAction() {
-        print("truing to send review")
         guard let user = Service.shared.deserializeUser() else { return }
         if reviewTextView.text.trimmingCharacters(in: .whitespacesAndNewlines) != "" {
             text = reviewTextView.text
              
             Service.shared.postReview(productID: productId, userToken: user.token, rate: rate, text: text)
-            self.dismiss(animated: true, completion: dismissVCCallback)
+//            self.dismiss(animated: true, completion: dismissVCCallback)
+            
+            let text = "Review added"
+            showAlert(view: self.view, alertType: .done, text: text)
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [weak self] in
+                self?.dismiss(animated: true, completion: self?.dismissVCCallback)
+            }
+        } else {
+            let text = "Write a review text"
+            showAlert(view: self.view, alertType: .error, text: text)
         }
     }
     

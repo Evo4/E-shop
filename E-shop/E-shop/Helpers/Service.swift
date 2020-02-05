@@ -60,7 +60,6 @@ class Service {
                                 let token = obj.value as! String
                                 let user = User(id: userID, username: username, password: password, token: token)
                                 self.serializeCurrentUser(user: user)
-                                print("user: ", user)
                             }
                             completion(.success(()))
                         }
@@ -98,9 +97,8 @@ class Service {
                                 let token = obj.value as! String
                                 let user = User(id: userID, username: username, password: password, token: token)
                                 self.serializeCurrentUser(user: user)
-                                print("user: ", user)
+                                completion(.success(()))
                             }
-                            completion(.success(()))
                         }
                     })
                 } catch {
@@ -109,7 +107,7 @@ class Service {
             }
         }.resume()
     }
-    
+    //переписать completion под ServerResult
     func findUserID(username: String, completion: @escaping (Int)->()) {
         guard let url = URL(string: "http://smktesting.herokuapp.com/api/register/") else {return}
         var request = URLRequest(url: url)
@@ -193,39 +191,6 @@ class Service {
             }
         }.resume()
     }
-    
-//    func postReview() {
-//        guard let url = URL(string: "http://smktesting.herokuapp.com/api/reviews/2?/") else {return}
-//        var request = URLRequest(url: url)
-//        request.httpMethod = "POST"
-//        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-//        let params = [
-//            "rate": 5,
-//            "text": "Lorem"
-//        ] as [String : Any]       //"{\"rate\": 5,\"text\": \"Lorem\" }"
-//
-//        guard let httpBody = try? JSONSerialization.data(withJSONObject: params, options: []) else {return}
-//        request.httpBody = httpBody
-//        URLSession.shared.dataTask(with: request) { (data, response, err) in
-//            print("Trying to post review")
-//            if let response = response {
-//                print(response)
-//            }
-//            if let err = err {
-//                print("Failed to post review:",err)
-//            }
-//            if let data = data {
-//                do {
-//                    let dict = try JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions()) as? [String: Any]
-//                    dict?.forEach({ (obj) in
-//                        print(obj)
-//                    })
-//                } catch {
-//                    print(error)
-//                }
-//            }
-//        }.resume()
-//    }
     
     func postReview(productID: Int, userToken: String, rate: Int, text: String) {
         guard let url = URL(string: "http://smktesting.herokuapp.com/api/reviews/\(productID)") else {return}
