@@ -73,6 +73,7 @@ class MainVC: UIViewController {
     
     var products: [Product] = []
     var user: User?
+    var isCached: Bool?
     
     private var reachability : Reachability!
     
@@ -83,13 +84,18 @@ class MainVC: UIViewController {
         setupGestures()
         sideMenuAction()
         loadUser()
+        observeReachability()
+        
+        guard let products = Service.shared.deserializeProducts() else {return}
+        products.forEach { (product) in
+            print(product)
+        }
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         self.navigationController?.navigationBar.layer.zPosition = -1
-        getProducts()
-        let isCached = Service.shared.deserializeIsProductsCached()
+        isCached = Service.shared.deserializeIsProductsCached()
         if isCached == nil {
             Service.shared.serializeIsProductsCached(isCached: false)
         }
@@ -160,14 +166,15 @@ class MainVC: UIViewController {
         DispatchQueue.main.async { [weak self] in
             switch reachability.connection {
             case .cellular, .wifi:
-//                self?.internetAlertViewController.dismiss(animated: false, completion: nil)
-//                self?.internetAlertViewController.isShow = false
+                self?.getProducts()
                 break
             case .unavailable:
-//                if self?.internetAlertViewController.isShow == false {
-//                    self?.present(self!.internetAlertViewController, animated: false, completion: nil)
-//                    self?.internetAlertViewController.isShow = true
-//                }
+                guard let isCached = self?.isCached else {return}
+                if self?.user != nil && isCached {
+                    guard let products = Service.shared.deserializeProducts() else {return}
+                    self?.products = products
+                    self?.collectionView.reloadData()
+                }
                 break
             case .none:
                 break
@@ -201,6 +208,7 @@ class MainVC: UIViewController {
             DispatchQueue.main.async {
                 self?.products = products
                 self?.collectionView.reloadData()
+                Service.shared.serializeProducts(products: products)
             }
         }
     }
@@ -262,6 +270,8 @@ extension MainVC: UICollectionViewDelegate, UICollectionViewDataSource {
             cell.callback = { [weak self] in
                 let productVC = ProductVC()
                 productVC.product = product
+                productVC.isCached = self?.isCached
+                productVC.user = self?.user
                 
                 let navTitleLabel = UILabel()
                 let navTitle = NSMutableAttributedString(string: "Product", attributes:[

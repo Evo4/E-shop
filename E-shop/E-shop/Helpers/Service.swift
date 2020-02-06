@@ -273,12 +273,12 @@ class Service {
         return products
     }
     
-    func serializeReviews(reviews: [Review]) {
-        defs.set(try? PropertyListEncoder().encode(reviews), forKey: "reviews")
+    func serializeReviews(reviews: [Review], productID: Int) {
+        defs.set(try? PropertyListEncoder().encode(reviews), forKey: "reviews\(productID)")
     }
     
-    func deserializeReviews() -> [Review]? {
-        guard let data = defs.object(forKey: "reviews") as? Data,
+    func deserializeReviews(productID: Int) -> [Review]? {
+        guard let data = defs.object(forKey: "reviews\(productID)") as? Data,
             let reviews = try? PropertyListDecoder().decode([Review].self, from: data) else {
                 return nil
         }

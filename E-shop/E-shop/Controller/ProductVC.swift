@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Reachability
 
 class ProductVC: UIViewController {
 
@@ -62,10 +63,16 @@ class ProductVC: UIViewController {
         }
     }
     
+    var user: User?
+    var isCached: Bool?
+    
+    private var reachability : Reachability!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupAppearance()
         setupConstraints()
+        observeReachability()
     }
     
     func setupAppearance() {
@@ -105,6 +112,7 @@ class ProductVC: UIViewController {
             DispatchQueue.main.async {
                 let sortedReviews = reviews.sorted(by: {$0.id > $1.id})
                 self.productCardView.reviews = sortedReviews
+                Service.shared.serializeReviews(reviews: sortedReviews, productID: productID)
             }
         }
     }
@@ -118,6 +126,38 @@ class ProductVC: UIViewController {
         newReviewVC.dismissVCCallback = { [weak self] in
             guard let id = self?.product?.id else {return}
             self?.getReviews(productID: id)
+        }
+    }
+    
+    func observeReachability(){
+        self.reachability = try! Reachability()
+        NotificationCenter.default.addObserver(self, selector:#selector(self.reachabilityChanged), name: NSNotification.Name.reachabilityChanged, object: nil)
+        do {
+            try self.reachability.startNotifier()
+        }
+        catch(let error) {
+            print("Error occured while starting reachability notifications : \(error.localizedDescription)")
+        }
+    }
+
+    @objc func reachabilityChanged(note: Notification) {
+        let reachability = note.object as! Reachability
+        DispatchQueue.main.async { [weak self] in
+            switch reachability.connection {
+            case .cellular, .wifi:
+                break
+            case .unavailable:
+                guard let isCached = self?.isCached else {return}
+                if self?.user != nil && isCached {
+                    guard let product = self?.product,
+                        let reviews = Service.shared.deserializeReviews(productID: product.id) else {return}
+                    self?.productCardView.reviews = reviews
+                    self?.productCardView.reviewsCollectionView.reloadData()
+                }
+                break
+            case .none:
+                break
+            }
         }
     }
 }

@@ -7,41 +7,76 @@
 //
 
 import UIKit
+import Reachability
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
     var user: User?
-
+    private var reachability : Reachability!
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
         window = UIWindow()
         window?.makeKeyAndVisible()
         
         user = Service.shared.deserializeUser()
-        if user != nil {
-            Service.shared.loginAccount(username: user!.username, password: user!.password) { [weak self] (reply) in
-                switch reply {
-                case .success(_):
-                    DispatchQueue.main.async {
-                        let vc = MainVC()
-                        let navController = UINavigationController(rootViewController: vc)
-                        self?.window?.rootViewController = navController
+        do {
+            self.reachability = try Reachability()
+            if user != nil {
+                DispatchQueue.main.async { [weak self] in
+                    switch self?.reachability.connection {
+                    case .cellular, .wifi:
+                        if self?.user != nil {
+                            Service.shared.loginAccount(username: (self?.user!.username)!, password: (self?.user!.password)!) { [weak self] (reply) in
+                                switch reply {
+                                case .success(_):
+                                    DispatchQueue.main.async {
+                                        let vc = MainVC()
+                                        let navController = UINavigationController(rootViewController: vc)
+                                        self?.window?.rootViewController = navController
+                                    }
+                                    break
+                                case .failure( _):
+                                    DispatchQueue.main.async {
+                                        let vc = LoginVC()
+                                        self?.window?.rootViewController = vc
+                                    }
+                                    break
+                                }
+                            }
+                        } else {
+                            let vc = LoginVC()
+                            self?.window?.rootViewController = vc
+                        }
+                        break
+                    case .unavailable:
+                        if self?.user != nil {
+                            DispatchQueue.main.async {
+                                let vc = MainVC()
+                                let navController = UINavigationController(rootViewController: vc)
+                                self?.window?.rootViewController = navController
+                            }
+                        } else {
+                            let vc = LoginVC()
+                            self?.window?.rootViewController = vc
+                        }
+                        break
+                    case .none:
+                        break
+                    case .some(.none):
+                        break
                     }
-                    break
-                case .failure( _):
-                    DispatchQueue.main.async {
-                        let vc = LoginVC()
-                        self?.window?.rootViewController = vc
-                    }
-                    break
                 }
+            }  else {
+                let vc = LoginVC()
+                self.window?.rootViewController = vc
             }
-        } else {
-            let vc = LoginVC()
-            window?.rootViewController = vc
+        } catch {
+            print(error)
         }
+
         return true
     }
 
