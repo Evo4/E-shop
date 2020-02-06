@@ -107,7 +107,7 @@ class Service {
             }
         }.resume()
     }
-    //переписать completion под ServerResult
+    
     func findUserID(username: String, completion: @escaping (Int)->()) {
         guard let url = URL(string: "http://smktesting.herokuapp.com/api/register/") else {return}
         var request = URLRequest(url: url)
@@ -211,10 +211,6 @@ class Service {
             }
             if let response = response {
                 print("Post review response: ", response)
-            }
-            if let data = data {
-                let stringData = String(data: data, encoding: .utf8)
-                print(stringData)
             }
         }.resume()
         

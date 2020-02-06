@@ -51,6 +51,31 @@ class MainVC: UIViewController {
     var sideMenuLeftAnchor: NSLayoutConstraint!
     var sideMenuRightAnchor: NSLayoutConstraint!
     
+    private lazy var noInternetConnectionView: NoInternetConnectionView = {
+        let view = NoInternetConnectionView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    var noInternetConnectionTopAnchor: NSLayoutConstraint!
+    var noInternetConnectionBottomAnchor: NSLayoutConstraint!
+    
+    var isInternetEnable: Bool? {
+        didSet {
+            guard let isInternetEnable = self.isInternetEnable else {return}
+            if isInternetEnable {
+                noInternetConnectionBottomAnchor.isActive = false
+                noInternetConnectionTopAnchor.isActive = true
+                UIView.animate(withDuration: 0.4) { [weak self] in
+                    self?.view.layoutIfNeeded()
+                }
+            } else {
+                UIView.animate(withDuration: 0.4) { [weak self] in
+                    self?.view.layoutIfNeeded()
+                }
+            }
+        }
+    }
+    
     var isMenuHidden: Bool = true {
         didSet {
             if self.isMenuHidden {
@@ -86,10 +111,6 @@ class MainVC: UIViewController {
         loadUser()
         observeReachability()
         
-        guard let products = Service.shared.deserializeProducts() else {return}
-        products.forEach { (product) in
-            print(product)
-        }
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -126,12 +147,15 @@ class MainVC: UIViewController {
     }
 
     func setupConstraints() {
-        [collectionView, sideMenuBackView, sideMenuView].forEach { (subview) in
+        [collectionView, sideMenuBackView, sideMenuView, noInternetConnectionView].forEach { (subview) in
             view.addSubview(subview)
         }
         
         sideMenuLeftAnchor = sideMenuView.leftAnchor.constraint(equalTo: view.leftAnchor)
         sideMenuRightAnchor = sideMenuView.rightAnchor.constraint(equalTo: view.leftAnchor)
+        
+        noInternetConnectionBottomAnchor = noInternetConnectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+        noInternetConnectionTopAnchor = noInternetConnectionView.topAnchor.constraint(equalTo: view.bottomAnchor, constant: 20)
         NSLayoutConstraint.activate([
             collectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             collectionView.leftAnchor.constraint(equalTo: view.leftAnchor),
@@ -147,6 +171,11 @@ class MainVC: UIViewController {
             sideMenuRightAnchor!,
             sideMenuView.bottomAnchor.constraint(equalTo: sideMenuBackView.bottomAnchor),
             sideMenuView.widthAnchor.constraint(equalTo: sideMenuBackView.widthAnchor, multiplier: 0.7),
+            
+            noInternetConnectionTopAnchor!,
+            noInternetConnectionView.leftAnchor.constraint(equalTo: view.leftAnchor),
+            noInternetConnectionView.rightAnchor.constraint(equalTo: view.rightAnchor),
+            noInternetConnectionView.heightAnchor.constraint(equalToConstant: 80)
         ])
     }
     
@@ -167,8 +196,10 @@ class MainVC: UIViewController {
             switch reachability.connection {
             case .cellular, .wifi:
                 self?.getProducts()
+                self?.isInternetEnable = true
                 break
             case .unavailable:
+                self?.isInternetEnable = false
                 guard let isCached = self?.isCached else {return}
                 if self?.user != nil && isCached {
                     guard let products = Service.shared.deserializeProducts() else {return}

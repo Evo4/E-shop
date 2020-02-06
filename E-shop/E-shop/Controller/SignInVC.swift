@@ -112,7 +112,7 @@ class SignInVC: UIViewController {
             topView.topAnchor.constraint(equalTo: view.topAnchor),
             topView.leftAnchor.constraint(equalTo: view.leftAnchor),
             topView.rightAnchor.constraint(equalTo: view.rightAnchor),
-            topView.heightAnchor.constraint(equalToConstant: 285),
+            topView.heightAnchor.constraint(equalToConstant: 310),
             
             backButton.topAnchor.constraint(equalTo: topView.safeAreaLayoutGuide.topAnchor, constant: 10),
             backButton.leftAnchor.constraint(equalTo: topView.leftAnchor, constant: 15),

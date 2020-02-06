@@ -154,6 +154,7 @@ class SettingsVC: UIViewController {
         textField.inputAccessoryView = toolbar
     }
     
+    //MARK: gesture for selecting profile photo
     func setupGestures() {
         let gesture = UITapGestureRecognizer(target: self, action: #selector(setProfilePhotoAction))
         profileImageView.isUserInteractionEnabled = true
