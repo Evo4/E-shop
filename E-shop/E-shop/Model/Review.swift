@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct Review: Decodable {
+struct Review: Codable {
     let id: Int
     let product: Int
     let rate: Int
@@ -17,7 +17,7 @@ struct Review: Decodable {
     let created_at: String
 }
 
-struct ReviewOwner: Decodable {
+struct ReviewOwner: Codable {
     let id: Int
     let username: String
     let first_name: String?

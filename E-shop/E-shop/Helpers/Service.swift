@@ -240,8 +240,8 @@ class Service {
         return user
     }
     
-    func serializeSignInUser(user: SignInUser) {
-        defs.set(try? PropertyListEncoder().encode(user), forKey: "signInUser")
+    func serializeSignInUser(signInUser: SignInUser) {
+        defs.set(try? PropertyListEncoder().encode(signInUser), forKey: "signInUser")
     }
     
     func deserializeSignInUser() -> SignInUser? {
@@ -250,5 +250,38 @@ class Service {
                 return nil
         }
         return signInUser
+    }
+    
+    func serializeIsProductsCached(isCached: Bool) {
+        defs.set(isCached, forKey: "isCached")
+    }
+    
+    func deserializeIsProductsCached() -> Bool? {
+        let isCached = defs.object(forKey: "isCached") as? Bool
+        return isCached
+    }
+    
+    func serializeProducts(products: [Product]) {
+        defs.set(try? PropertyListEncoder().encode(products), forKey: "products")
+    }
+    
+    func deserializeProducts() -> [Product]? {
+        guard let data = defs.object(forKey: "products") as? Data,
+            let products = try? PropertyListDecoder().decode([Product].self, from: data) else {
+                return nil
+        }
+        return products
+    }
+    
+    func serializeReviews(reviews: [Review]) {
+        defs.set(try? PropertyListEncoder().encode(reviews), forKey: "reviews")
+    }
+    
+    func deserializeReviews() -> [Review]? {
+        guard let data = defs.object(forKey: "reviews") as? Data,
+            let reviews = try? PropertyListDecoder().decode([Review].self, from: data) else {
+                return nil
+        }
+        return reviews
     }
 }

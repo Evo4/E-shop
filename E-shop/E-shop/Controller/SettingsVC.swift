@@ -52,6 +52,7 @@ class SettingsVC: UIViewController {
     
     private lazy var cacheSwitch: UISwitch = {
         let s = UISwitch()
+        s.addTarget(self, action: #selector(switchAction(sender:)), for: .valueChanged)
         return s
     }()
     
@@ -80,6 +81,13 @@ class SettingsVC: UIViewController {
             profileImageView.image = UIImage(data: imageData)
             nameTextField.text = signInUser.name
             surnameTextField.text = signInUser.surname
+        }
+    }
+    
+    var isCached: Bool? {
+        didSet {
+            guard let isCahed = self.isCached else {return}
+            self.cacheSwitch.setOn(isCahed, animated: false)
         }
     }
     
@@ -153,11 +161,17 @@ class SettingsVC: UIViewController {
     }
     
     @objc func saveAction() {
-        if let name = nameTextField.text, let surname = surnameTextField.text {
+        if nameTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines) != "",
+            surnameTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines) != "" {
+            guard let name = nameTextField.text,
+                let surname = surnameTextField.text else {return}
+            
             let image = profileImageView.image?.pngData()
             let signInUser = SignInUser(photo: image, name: name, surname: surname)
             showAlert(view: self.view, alertType: .done, text: "Saved")
-            Service.shared.serializeSignInUser(user: signInUser)
+            Service.shared.serializeSignInUser(signInUser: signInUser)
+        } else {
+            showAlert(view: self.view, alertType: .error, text: "Fill all fields")
         }
     }
     
@@ -175,8 +189,15 @@ class SettingsVC: UIViewController {
         }
     }
     
+    @objc func switchAction(sender: UISwitch) {
+        isCached = sender.isOn
+        guard let isCached = self.isCached else {return}
+        Service.shared.serializeIsProductsCached(isCached: isCached)
+    }
+    
     func deserializeUserData() {
         signInUser = Service.shared.deserializeSignInUser()
+        isCached = Service.shared.deserializeIsProductsCached()
     }
 }
 

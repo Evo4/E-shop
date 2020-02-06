@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct Product: Decodable {
+struct Product: Codable {
     let id: Int
     let img: String
     let text: String

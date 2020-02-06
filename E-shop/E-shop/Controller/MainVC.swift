@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Reachability
 
 class MainVC: UIViewController {
 
@@ -73,6 +74,8 @@ class MainVC: UIViewController {
     var products: [Product] = []
     var user: User?
     
+    private var reachability : Reachability!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupAppearance()
@@ -86,6 +89,10 @@ class MainVC: UIViewController {
         super.viewDidAppear(animated)
         self.navigationController?.navigationBar.layer.zPosition = -1
         getProducts()
+        let isCached = Service.shared.deserializeIsProductsCached()
+        if isCached == nil {
+            Service.shared.serializeIsProductsCached(isCached: false)
+        }
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -135,6 +142,37 @@ class MainVC: UIViewController {
             sideMenuView.bottomAnchor.constraint(equalTo: sideMenuBackView.bottomAnchor),
             sideMenuView.widthAnchor.constraint(equalTo: sideMenuBackView.widthAnchor, multiplier: 0.7),
         ])
+    }
+    
+    func observeReachability(){
+        self.reachability = try! Reachability()
+        NotificationCenter.default.addObserver(self, selector:#selector(self.reachabilityChanged), name: NSNotification.Name.reachabilityChanged, object: nil)
+        do {
+            try self.reachability.startNotifier()
+        }
+        catch(let error) {
+            print("Error occured while starting reachability notifications : \(error.localizedDescription)")
+        }
+    }
+
+    @objc func reachabilityChanged(note: Notification) {
+        let reachability = note.object as! Reachability
+        DispatchQueue.main.async { [weak self] in
+            switch reachability.connection {
+            case .cellular, .wifi:
+//                self?.internetAlertViewController.dismiss(animated: false, completion: nil)
+//                self?.internetAlertViewController.isShow = false
+                break
+            case .unavailable:
+//                if self?.internetAlertViewController.isShow == false {
+//                    self?.present(self!.internetAlertViewController, animated: false, completion: nil)
+//                    self?.internetAlertViewController.isShow = true
+//                }
+                break
+            case .none:
+                break
+            }
+        }
     }
     
     func loadUser() {
