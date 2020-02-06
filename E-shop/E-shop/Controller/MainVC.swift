@@ -69,6 +69,8 @@ class MainVC: UIViewController {
                     self?.view.layoutIfNeeded()
                 }
             } else {
+                noInternetConnectionTopAnchor.isActive = false
+                noInternetConnectionBottomAnchor.isActive = true
                 UIView.animate(withDuration: 0.4) { [weak self] in
                     self?.view.layoutIfNeeded()
                 }
