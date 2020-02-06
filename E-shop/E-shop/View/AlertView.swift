@@ -36,11 +36,9 @@ class AlertView: UIView {
             guard let alertType = self.alertType else {return}
             switch alertType {
             case .done:
-                print("done type")
                 self.alertImageView.image = #imageLiteral(resourceName: "checkmark")
                 break
             case .error:
-                print("err type")
                 self.alertImageView.image = #imageLiteral(resourceName: "exclamation_mark")
                 break
             }

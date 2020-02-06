@@ -72,11 +72,23 @@ class SettingsVC: UIViewController {
         return button
     }()
     
+    private lazy var imagePicker = UIImagePickerController()
+    
+    var signInUser: SignInUser? {
+        didSet {
+            guard let signInUser = self.signInUser, let imageData = self.signInUser?.photo else {return}
+            profileImageView.image = UIImage(data: imageData)
+            nameTextField.text = signInUser.name
+            surnameTextField.text = signInUser.surname
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupAppearance()
         setupConstaints()
         setupGestures()
+        deserializeUserData()
     }
 
     func setupAppearance() {
@@ -141,7 +153,12 @@ class SettingsVC: UIViewController {
     }
     
     @objc func saveAction() {
-        
+        if let name = nameTextField.text, let surname = surnameTextField.text {
+            let image = profileImageView.image?.pngData()
+            let signInUser = SignInUser(photo: image, name: name, surname: surname)
+            showAlert(view: self.view, alertType: .done, text: "Saved")
+            Service.shared.serializeSignInUser(user: signInUser)
+        }
     }
     
     @objc func doneAction() {
@@ -149,6 +166,31 @@ class SettingsVC: UIViewController {
     }
     
     @objc func setProfilePhotoAction() {
-        
+        if UIImagePickerController.isSourceTypeAvailable(.savedPhotosAlbum){
+            imagePicker.delegate = self
+            imagePicker.sourceType = .photoLibrary
+            imagePicker.allowsEditing = false
+
+            present(imagePicker, animated: true, completion: nil)
+        }
+    }
+    
+    func deserializeUserData() {
+        signInUser = Service.shared.deserializeSignInUser()
+    }
+}
+
+extension SettingsVC: UINavigationControllerDelegate, UIImagePickerControllerDelegate {
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        if let pickedImage = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
+            profileImageView.contentMode = .scaleAspectFill
+            profileImageView.image = pickedImage
+        }
+        self.dismiss(animated: true, completion: nil)
+    }
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        dismiss(animated: true, completion:nil)
     }
 }

@@ -14,3 +14,9 @@ struct User: Codable {
     let password: String
     let token: String
 }
+
+struct SignInUser: Codable {
+    let photo: Data?
+    let name: String
+    let surname: String
+}

@@ -127,6 +127,7 @@ extension SideMenuView: UITableViewDelegate, UITableViewDataSource {
                 break
             case 1:
                 Service.shared.defs.removeObject(forKey: "user")
+                Service.shared.defs.removeObject(forKey: "signInUser")
                 callback?(LoginVC())
                 break
             default:
@@ -134,6 +135,7 @@ extension SideMenuView: UITableViewDelegate, UITableViewDataSource {
             }
         } else {
             Service.shared.defs.removeObject(forKey: "user")
+            Service.shared.defs.removeObject(forKey: "signInUser")
             callback?(LoginVC())
         }
     }

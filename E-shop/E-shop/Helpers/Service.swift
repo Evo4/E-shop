@@ -239,4 +239,16 @@ class Service {
         }
         return user
     }
+    
+    func serializeSignInUser(user: SignInUser) {
+        defs.set(try? PropertyListEncoder().encode(user), forKey: "signInUser")
+    }
+    
+    func deserializeSignInUser() -> SignInUser? {
+        guard let data = defs.object(forKey: "signInUser") as? Data,
+            let signInUser = try? PropertyListDecoder().decode(SignInUser.self, from: data) else {
+                return nil
+        }
+        return signInUser
+    }
 }

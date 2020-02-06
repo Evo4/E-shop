@@ -68,5 +68,7 @@
 		<key>NSAllowsArbitraryLoads</key>
 		<true/>
 	</dict>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>Our application needs permission to get photos...</string>
 </dict>
 </plist>
