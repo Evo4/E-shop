@@ -21,18 +21,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         user = Service.shared.deserializeUser()
         if user != nil {
-            Service.shared.loginAccount(username: user!.username, password: user!.password) { (reply) in
+            Service.shared.loginAccount(username: user!.username, password: user!.password) { [weak self] (reply) in
                 switch reply {
                 case .success(_):
-                    DispatchQueue.main.async { [weak self] in
+                    DispatchQueue.main.async {
                         let vc = MainVC()
                         let navController = UINavigationController(rootViewController: vc)
                         self?.window?.rootViewController = navController
                     }
                     break
                 case .failure( _):
-                    let vc = LoginVC()
-                    self.window?.rootViewController = vc
+                    DispatchQueue.main.async {
+                        let vc = LoginVC()
+                        self?.window?.rootViewController = vc
+                    }
                     break
                 }
             }

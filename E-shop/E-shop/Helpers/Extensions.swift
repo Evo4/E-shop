@@ -66,5 +66,19 @@ extension UIViewController {
             }
         }
     }
+}
 
+extension UITextField {
+    func bottomLineBorder() {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
+        self.addSubview(view)
+        NSLayoutConstraint.activate([
+            view.topAnchor.constraint(equalTo: self.bottomAnchor),
+            view.leftAnchor.constraint(equalTo: self.leftAnchor),
+            view.rightAnchor.constraint(equalTo: self.rightAnchor),
+            view.heightAnchor.constraint(equalToConstant: 1)
+        ])
+    }
 }
