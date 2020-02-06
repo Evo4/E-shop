@@ -78,15 +78,8 @@ class MainVC: UIViewController {
         setupAppearance()
         setupConstraints()
         setupGestures()
-        
-        DispatchQueue.main.async {
-            self.user = Service.shared.deserializeUser()
-        }
-        
-        sideMenuView.callback = { viewController in
-            viewController.modalPresentationStyle = .fullScreen
-            self.present(viewController, animated: true, completion: nil)
-        }
+        sideMenuAction()
+        loadUser()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -142,6 +135,27 @@ class MainVC: UIViewController {
             sideMenuView.bottomAnchor.constraint(equalTo: sideMenuBackView.bottomAnchor),
             sideMenuView.widthAnchor.constraint(equalTo: sideMenuBackView.widthAnchor, multiplier: 0.7),
         ])
+    }
+    
+    func loadUser() {
+        DispatchQueue.main.async { [weak self] in
+            self?.user = Service.shared.deserializeUser()
+            self?.sideMenuView.isSignIn = self?.user != nil ? true : false
+        }
+    }
+    
+    func sideMenuAction() {
+        sideMenuView.callback = { [weak self] viewController in
+            if viewController is SettingsVC {
+                viewController.modalPresentationStyle = .fullScreen
+                self?.navigationController?.pushViewController(viewController, animated: true)
+                self?.isMenuHidden = !self!.isMenuHidden
+            } else {
+                viewController.modalPresentationStyle = .fullScreen
+                self?.present(viewController, animated: true, completion: nil)
+            }
+            
+        }
     }
     
     func getProducts() {

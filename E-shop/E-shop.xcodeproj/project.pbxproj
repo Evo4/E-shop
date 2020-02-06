@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		112F2BB923EB813000B1ABF8 /* SettingsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 112F2BB823EB813000B1ABF8 /* SettingsVC.swift */; };
+		112F2BBD23EB998000B1ABF8 /* ProfileCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 112F2BBC23EB998000B1ABF8 /* ProfileCell.swift */; };
 		1191276F23E4BC52000F54E9 /* Raleway-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1191276D23E4BC51000F54E9 /* Raleway-Bold.ttf */; };
 		1191277023E4BC52000F54E9 /* Raleway-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1191276E23E4BC51000F54E9 /* Raleway-Regular.ttf */; };
 		1191277323E4BCDC000F54E9 /* EnterButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1191277123E4BCDC000F54E9 /* EnterButton.swift */; };
@@ -59,6 +60,7 @@
 
 /* Begin PBXFileReference section */
 		112F2BB823EB813000B1ABF8 /* SettingsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsVC.swift; sourceTree = "<group>"; };
+		112F2BBC23EB998000B1ABF8 /* ProfileCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileCell.swift; sourceTree = "<group>"; };
 		1191276D23E4BC51000F54E9 /* Raleway-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Raleway-Bold.ttf"; sourceTree = "<group>"; };
 		1191276E23E4BC51000F54E9 /* Raleway-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Raleway-Regular.ttf"; sourceTree = "<group>"; };
 		1191277123E4BCDC000F54E9 /* EnterButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EnterButton.swift; sourceTree = "<group>"; };
@@ -122,6 +124,25 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		112F2BBA23EB971100B1ABF8 /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				1191277F23E4BE83000F54E9 /* ProductCell.swift */,
+				1191279623E73DF4000F54E9 /* ReviewCell.swift */,
+				112F2BBC23EB998000B1ABF8 /* ProfileCell.swift */,
+			);
+			path = Cell;
+			sourceTree = "<group>";
+		};
+		112F2BBB23EB972400B1ABF8 /* Button */ = {
+			isa = PBXGroup;
+			children = (
+				1191277223E4BCDC000F54E9 /* BackButton.swift */,
+				1191277123E4BCDC000F54E9 /* EnterButton.swift */,
+			);
+			path = Button;
+			sourceTree = "<group>";
+		};
 		1191276423E4BBD2000F54E9 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
@@ -156,11 +177,9 @@
 		1191276723E4BBE7000F54E9 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				112F2BBB23EB972400B1ABF8 /* Button */,
+				112F2BBA23EB971100B1ABF8 /* Cell */,
 				1191278723E4C01A000F54E9 /* Side menu */,
-				1191277223E4BCDC000F54E9 /* BackButton.swift */,
-				1191277123E4BCDC000F54E9 /* EnterButton.swift */,
-				1191277F23E4BE83000F54E9 /* ProductCell.swift */,
-				1191279623E73DF4000F54E9 /* ReviewCell.swift */,
 				1191279023E63DFC000F54E9 /* ProductCardView.swift */,
 				11C5239923EA133100AF5BC5 /* AlertView.swift */,
 			);
@@ -390,6 +409,7 @@
 				1191279523E739A0000F54E9 /* SnapPagingLayout.swift in Sources */,
 				1191277E23E4BE4C000F54E9 /* Service.swift in Sources */,
 				1191278F23E4D12C000F54E9 /* User.swift in Sources */,
+				112F2BBD23EB998000B1ABF8 /* ProfileCell.swift in Sources */,
 				1191277C23E4BDED000F54E9 /* MainVC.swift in Sources */,
 				1191279323E72DED000F54E9 /* NewReviewVC.swift in Sources */,
 				1191278223E4BF40000F54E9 /* ColumnFlowLayout.swift in Sources */,

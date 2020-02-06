@@ -27,7 +27,7 @@ class SideMenuView: UIView {
         return view
     }()
     
-    private lazy var menuTableView: UITableView = {
+    lazy var menuTableView: UITableView = {
         let tableView = UITableView()
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.separatorStyle = .none
@@ -36,10 +36,27 @@ class SideMenuView: UIView {
     }()
     
     var callback: ((UIViewController)->())?
-    let menuItems:[MenuItem] = [
-        MenuItem(name: "Settings", image: #imageLiteral(resourceName: "settings")),
-        MenuItem(name: "Logout", image: #imageLiteral(resourceName: "exit"))
-    ]
+    var menuItems:[MenuItem] = []
+    
+    var isSignIn: Bool? {
+        didSet {
+            guard let isSignIn = self.isSignIn else {return}
+            switch isSignIn {
+            case true:
+                self.menuItems = [
+                    MenuItem(name: "Settings", image: #imageLiteral(resourceName: "settings")),
+                    MenuItem(name: "Logout", image: #imageLiteral(resourceName: "exit"))
+                ]
+                break
+            case false:
+                self.menuItems = [
+                    MenuItem(name: "Logout", image: #imageLiteral(resourceName: "exit"))
+                ]
+                break
+            }
+            self.menuTableView.reloadData()
+        }
+    }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -91,7 +108,6 @@ extension SideMenuView: UITableViewDelegate, UITableViewDataSource {
             cell.menuItem = item
             cell.callback = {
                 self.cellAction(by: indexPath.row)
-//                print("works", indexPath.row)
             }
             
             return cell
@@ -104,15 +120,21 @@ extension SideMenuView: UITableViewDelegate, UITableViewDataSource {
     }
     
     func cellAction(by row: Int) {
-        switch row {
-        case 0:
-            break
-        case 1:
+        if menuItems.count > 1 {
+            switch row {
+            case 0:
+                callback?(SettingsVC())
+                break
+            case 1:
+                Service.shared.defs.removeObject(forKey: "user")
+                callback?(LoginVC())
+                break
+            default:
+                break
+            }
+        } else {
             Service.shared.defs.removeObject(forKey: "user")
             callback?(LoginVC())
-            break
-        default:
-            break
         }
     }
 }
